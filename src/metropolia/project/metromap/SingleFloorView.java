@@ -3,33 +3,32 @@ package metropolia.project.metromap;
 import metropolia.project.utility.MetroMapEvent;
 import metropolia.project.utility.MetroMapSurfaceView;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
+import android.graphics.Picture;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.View.OnTouchListener;
+
+import com.larvalabs.svgandroid.SVG;
+import com.larvalabs.svgandroid.SVGParser;
 
 /*
  * Handles painting of images, animating and touch listeners
  */
-public class SingleFloorView extends MetroMapSurfaceView implements OnTouchListener,
-		SurfaceHolder.Callback {
-
-	private final int TOLERANCE = 50; //used to check if user has touched close enough to floor maps
+public class SingleFloorView extends MetroMapSurfaceView implements
+		OnTouchListener, SurfaceHolder.Callback {
 	private final boolean DEBUG = true; // enables debug data to this view
-	
+
 	private Paint mPaint;
-	private Floor[] floor = new Floor[4];
+	private Picture map;
 	private GestureDetector mDetector;
 	private AnimationThread aThread;
 	private Context context;
@@ -38,57 +37,51 @@ public class SingleFloorView extends MetroMapSurfaceView implements OnTouchListe
 	public SingleFloorView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-		initBall();
-		
+		initBall(1);
 	}
 
-	//Initializes animation thread and canvas paints
-	private void initBall() {
+	public SingleFloorView(Context context, AttributeSet attrs, int floorNumber) {
+		super(context, attrs);
+		this.context = context;
+		initBall(floorNumber);
+	}
+
+	// Initializes animation thread and canvas paints
+	private void initBall(int floorNumber) {
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG); // reduce the
 		mPaint.setColor(Color.BLACK); // jaggedness of lines in graphics
 		mPaint.setTextSize(13);
 		mPaint.setTypeface(Typeface.SANS_SERIF);
-
-		// haha en tee tätä oikein hv
-		addFloorMaps();
-		
+		loadPicture(floorNumber);
 
 		getHolder().addCallback(this);
 		aThread = new AnimationThread(getHolder(), this);
-		
+
 		this.setOnTouchListener(this);
-		
+
 		mDetector = new GestureDetector(getContext(),
 				new SimpleOnGestureListener() {
-			
+
 					public boolean onDoubleTap(MotionEvent e) {
 						invalidate();
 						return true;
 					}
-					
+
 					/*
-					 * (non-Javadoc)
-					 * Used to get motion from flings and assigning new target locations for floors
-					 * @see android.view.GestureDetector.SimpleOnGestureListener#onFling(android.view.MotionEvent, android.view.MotionEvent, float, float)
+					 * (non-Javadoc) Used to get motion from flings and
+					 * assigning new target locations for floors
+					 * 
+					 * @see
+					 * android.view.GestureDetector.SimpleOnGestureListener#
+					 * onFling(android.view.MotionEvent,
+					 * android.view.MotionEvent, float, float)
 					 */
-					public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY){
-						if(velocityY > 0){
-							
-							for(Floor f : floor){
-								f.setTarget(new Point(f.getLocation().x, (f.getLocation().y + 80)));
-							}
-							
-						}else if(velocityY < 0){
-							
-							for(Floor f : floor){
-								f.setTarget(new Point(f.getLocation().x, (f.getLocation().y - 80)));
-							}
-						}
-						
+					public boolean onFling(MotionEvent e1, MotionEvent e2,
+							float velocityX, float velocityY) {
 						invalidate();
 						return true;
 					}
-					
+
 				});
 
 	}
@@ -98,30 +91,18 @@ public class SingleFloorView extends MetroMapSurfaceView implements OnTouchListe
 	 */
 	public void doDraw(Canvas canvas, MetroMapEvent e) {
 		canvas.drawColor(Color.WHITE);
-		
-		if(DEBUG){
-			canvas.drawText(String.valueOf("ms: " + e.getTime()), 20, 20, mPaint);
+		if (DEBUG) {
+			canvas.drawText(String.valueOf("ms: " + e.getTime()), 20, 20,
+					mPaint);
 		}
-		for(Floor f : floor){
-			canvas.drawBitmap(f.getPicture(), f.getLocation().x, f.getLocation().y, mPaint);
-		}	
-	}
-
-	public void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-		canvas.drawColor(Color.WHITE);
-		for(Floor f : floor){
-			canvas.drawBitmap(f.getPicture(),f.getLocation().x, f.getLocation().y, mPaint);
-		}	
+		canvas.drawPicture(map);
 	}
 
 	/*
 	 * called once in each animation cycle
 	 */
 	public void tick() {
-		for(Floor f : floor){
-			f.move();
-		}
+
 	}
 
 	@Override
@@ -156,7 +137,9 @@ public class SingleFloorView extends MetroMapSurfaceView implements OnTouchListe
 
 	/*
 	 * (non-Javadoc)
-	 * @see android.view.View.OnTouchListener#onTouch(android.view.View, android.view.MotionEvent)
+	 * 
+	 * @see android.view.View.OnTouchListener#onTouch(android.view.View,
+	 * android.view.MotionEvent)
 	 */
 	public boolean onTouch(View v, MotionEvent event) {
 		mDetector.onTouchEvent(event);
@@ -166,32 +149,45 @@ public class SingleFloorView extends MetroMapSurfaceView implements OnTouchListe
 		}
 		return true;
 	}
-	
-	
-	/*
-	 * Initializes Floor objects with places and relates .png files
-	 */
-	public void addFloorMaps(){
-		
-		for(int i = 0; i < 4; i++){
-			floor[i] = new Floor(new Point(100, (450-(150*i))));
+
+	// loads a picture depending on floornumber, returns true on success and
+	// false on failure
+	// notes on approved .svg files
+	// https://code.google.com/p/svg-android/wiki/Tutorial
+	public boolean loadPicture(int floornumber) {
+		try {
+			SVG svg;
+			switch (floornumber) {
+
+			case 0:
+				svg = SVGParser.getSVGFromResource(getResources(),
+						R.raw.zerofloor);
+				map = svg.getPicture();
+				return true;
+
+			case 1:
+				svg = SVGParser.getSVGFromResource(getResources(),
+						R.raw.android);
+				map = svg.getPicture();
+				return true;
+
+			case 2:
+				svg = SVGParser.getSVGFromResource(getResources(),
+						R.raw.secondfloor);
+				map = svg.getPicture();
+				return true;
+
+			case 3:
+				svg = SVGParser.getSVGFromResource(getResources(),
+						R.raw.thirdfloor);
+				map = svg.getPicture();
+				return true;
+			}
+
+			return false;
+		} catch (Exception e) {
+			Log.d("picture load error:", e.getMessage());
+			return false;
 		}
-		
-		floor[3].picture = BitmapFactory.decodeResource(getResources(),
-				R.drawable.floor3);
-		floor[3].picture = Bitmap.createScaledBitmap(floor[3].picture, 150, 150, true);
-		
-		floor[2].picture = BitmapFactory.decodeResource(getResources(),
-				R.drawable.floor2);
-		floor[2].picture = Bitmap.createScaledBitmap(floor[2].picture, 150, 150, true);
-		
-		floor[1].picture = BitmapFactory.decodeResource(getResources(),
-				R.drawable.floor1);
-		floor[1].picture = Bitmap.createScaledBitmap(floor[1].picture, 150, 150, true);
-		
-		floor[0].picture = BitmapFactory.decodeResource(getResources(),
-				R.drawable.floor0);
-		floor[0].picture = Bitmap.createScaledBitmap(floor[0].picture, 150, 150, true);
 	}
-	
 }

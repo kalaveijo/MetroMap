@@ -45,7 +45,7 @@ public class AnimationThread extends Thread {
 					event.setTime(lastTime);
 				}
 				
-				if(alMMEvent.isEmpty()){
+				if(alMMEvent.isEmpty()){ //nullcheck
 					alMMEvent.add(new MetroMapEvent(lastTime));
 				}
 				

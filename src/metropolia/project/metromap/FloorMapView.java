@@ -55,7 +55,6 @@ public class FloorMapView extends MetroMapSurfaceView implements OnTouchListener
 		// haha en tee tätä oikein hv
 		addFloorMaps();
 		
-
 		getHolder().addCallback(this);
 		aThread = new AnimationThread(getHolder(), this);
 		
@@ -67,8 +66,9 @@ public class FloorMapView extends MetroMapSurfaceView implements OnTouchListener
 					//check if user wants to select correct floor
 					public boolean onSingleTapConfirmed(MotionEvent e) {
 						alMMEvent.clear();
-						alMMEvent.add(new MetroMapEvent((int) e.getX(), (int) e.getY()));
-						
+						MetroMapEvent mme = new MetroMapEvent((int) e.getX(), (int) e.getY());
+						alMMEvent.add(mme);
+						checkIfMapPress(mme);
 						return true;
 					}
 					
@@ -110,6 +110,7 @@ public class FloorMapView extends MetroMapSurfaceView implements OnTouchListener
 			canvas.drawText(String.valueOf("x: " + e.getLocation().x), 20, 40, mPaint);
 			canvas.drawText(String.valueOf("y: " + e.getLocation().y), 20, 60, mPaint);
 		}
+		
 		for(Floor f : floor){
 			canvas.drawBitmap(f.getPicture(), f.getLocation().x, f.getLocation().y, mPaint);
 		}	
@@ -205,6 +206,21 @@ public class FloorMapView extends MetroMapSurfaceView implements OnTouchListener
 	//called by animation thread to get happened events
 	public ArrayList<MetroMapEvent> getEvents(){
 		return this.alMMEvent;
+	}
+	
+	/*
+	 * called by animation thread to check if user has pressed any floor icons
+	 */
+	public void checkIfMapPress(MetroMapEvent e){
+		for(Floor f : floor){
+
+			if(Math.abs(e.getLocation().x - f.getLocation().x) < TOLERANCE ){
+				if(Math.abs(e.getLocation().y - f.getLocation().y) < TOLERANCE ){
+					MainActivity ma = (MainActivity) context;
+					ma.changeFragment(new SingleFloor());
+				}
+			}
+		}
 	}
 	
 }
