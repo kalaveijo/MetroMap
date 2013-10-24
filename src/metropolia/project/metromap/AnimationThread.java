@@ -1,23 +1,24 @@
 package metropolia.project.metromap;
 
+import metropolia.project.utility.MetroMapSurfaceView;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class AnimationThread extends Thread {
 	
-	private FloorMapView cv;
+	private MetroMapSurfaceView cv;
 	private SurfaceHolder mHolder;
 	private boolean mRun = false;
 	private long startTime, lastTime = 0, sleepTime;
 	private int i = 0;
 	private long perioid = 20;
 
-	public AnimationThread(SurfaceHolder sHolder, FloorMapView cv) {
+	public AnimationThread(SurfaceHolder sHolder, MetroMapSurfaceView cv) {
 		this.cv = cv;
 		mHolder = sHolder;
 	}
-
+	
 	public void setRunning(boolean run) {
 		mRun = run;
 	}

@@ -21,7 +21,7 @@ import android.view.View.OnTouchListener;
 /*
  * Handles painting of images, animating and touch listeners
  */
-public class FloorMapView extends MetroMapSurfaceView implements OnTouchListener,
+public class SingleFloorView extends MetroMapSurfaceView implements OnTouchListener,
 		SurfaceHolder.Callback {
 
 	private final int TOLERANCE = 50; //used to check if user has touched close enough to floor maps
@@ -34,7 +34,7 @@ public class FloorMapView extends MetroMapSurfaceView implements OnTouchListener
 	private Context context;
 	private OnTouchListener touchListener;
 
-	public FloorMapView(Context context, AttributeSet attrs) {
+	public SingleFloorView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
 		initBall();
