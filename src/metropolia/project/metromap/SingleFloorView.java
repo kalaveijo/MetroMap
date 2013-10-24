@@ -1,5 +1,6 @@
 package metropolia.project.metromap;
 
+import metropolia.project.utility.MetroMapEvent;
 import metropolia.project.utility.MetroMapSurfaceView;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -95,11 +96,11 @@ public class SingleFloorView extends MetroMapSurfaceView implements OnTouchListe
 	/*
 	 * Does drawing to canvas, called from animation thread
 	 */
-	public void doDraw(Canvas canvas, Long time) {
+	public void doDraw(Canvas canvas, MetroMapEvent e) {
 		canvas.drawColor(Color.WHITE);
 		
 		if(DEBUG){
-			canvas.drawText(String.valueOf("ms: " + time), 20, 20, mPaint);
+			canvas.drawText(String.valueOf("ms: " + e.getTime()), 20, 20, mPaint);
 		}
 		for(Floor f : floor){
 			canvas.drawBitmap(f.getPicture(), f.getLocation().x, f.getLocation().y, mPaint);

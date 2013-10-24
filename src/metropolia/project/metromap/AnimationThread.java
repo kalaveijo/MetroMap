@@ -1,5 +1,8 @@
 package metropolia.project.metromap;
 
+import java.util.ArrayList;
+
+import metropolia.project.utility.MetroMapEvent;
 import metropolia.project.utility.MetroMapSurfaceView;
 import android.graphics.Canvas;
 import android.util.Log;
@@ -13,6 +16,7 @@ public class AnimationThread extends Thread {
 	private long startTime, lastTime = 0, sleepTime;
 	private int i = 0;
 	private long perioid = 20;
+	private ArrayList<MetroMapEvent> alMMEvent;
 
 	public AnimationThread(SurfaceHolder sHolder, MetroMapSurfaceView cv) {
 		this.cv = cv;
@@ -34,9 +38,19 @@ public class AnimationThread extends Thread {
 				
 				startTime = System.currentTimeMillis();
 
-				cv.tick();			
+				cv.tick();
+				alMMEvent = cv.getEvents();
 				
-				cv.doDraw(mCanvas, lastTime);
+				for(MetroMapEvent event : alMMEvent){ //retarted way of doing this but of well
+					event.setTime(lastTime);
+				}
+				
+				if(alMMEvent.isEmpty()){
+					alMMEvent.add(new MetroMapEvent(lastTime));
+				}
+				
+				cv.doDraw(mCanvas, alMMEvent.get(0));
+				
 				mHolder.unlockCanvasAndPost(mCanvas); 
 				lastTime = System.currentTimeMillis() - startTime;
 				sleepTime = perioid - lastTime;

@@ -1,5 +1,7 @@
 package metropolia.project.utility;
 
+import java.util.ArrayList;
+
 import metropolia.project.metromap.Floor;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -16,7 +18,7 @@ public class MetroMapSurfaceView extends SurfaceView {
 		super(context, attrs);
 	}
 	
-	public void doDraw(Canvas canvas, Long time) {
+	public void doDraw(Canvas canvas, MetroMapEvent event) {
 
 	}
 
@@ -26,6 +28,10 @@ public class MetroMapSurfaceView extends SurfaceView {
 	
 	public void tick(){
 		
+	}
+	
+	public ArrayList<MetroMapEvent> getEvents(){
+		return new ArrayList<MetroMapEvent>();
 	}
 	
 }

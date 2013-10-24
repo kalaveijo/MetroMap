@@ -1,6 +1,9 @@
 package metropolia.project.metromap;
 
+import java.util.ArrayList;
+
 import metropolia.project.utility.MetroMapSurfaceView;
+import metropolia.project.utility.MetroMapEvent;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +36,7 @@ public class FloorMapView extends MetroMapSurfaceView implements OnTouchListener
 	private AnimationThread aThread;
 	private Context context;
 	private OnTouchListener touchListener;
+	private ArrayList<MetroMapEvent> alMMEvent = new ArrayList<MetroMapEvent>();
 
 	public FloorMapView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -60,8 +64,11 @@ public class FloorMapView extends MetroMapSurfaceView implements OnTouchListener
 		mDetector = new GestureDetector(getContext(),
 				new SimpleOnGestureListener() {
 			
-					public boolean onDoubleTap(MotionEvent e) {
-						invalidate();
+					//check if user wants to select correct floor
+					public boolean onSingleTapConfirmed(MotionEvent e) {
+						alMMEvent.clear();
+						alMMEvent.add(new MetroMapEvent((int) e.getX(), (int) e.getY()));
+						
 						return true;
 					}
 					
@@ -95,11 +102,13 @@ public class FloorMapView extends MetroMapSurfaceView implements OnTouchListener
 	/*
 	 * Does drawing to canvas, called from animation thread
 	 */
-	public void doDraw(Canvas canvas, Long time) {
+	public void doDraw(Canvas canvas, MetroMapEvent e) {
 		canvas.drawColor(Color.WHITE);
 		
 		if(DEBUG){
-			canvas.drawText(String.valueOf("ms: " + time), 20, 20, mPaint);
+			canvas.drawText(String.valueOf("ms: " + e.getTime()), 20, 20, mPaint);
+			canvas.drawText(String.valueOf("x: " + e.getLocation().x), 20, 40, mPaint);
+			canvas.drawText(String.valueOf("y: " + e.getLocation().y), 20, 60, mPaint);
 		}
 		for(Floor f : floor){
 			canvas.drawBitmap(f.getPicture(), f.getLocation().x, f.getLocation().y, mPaint);
@@ -191,6 +200,11 @@ public class FloorMapView extends MetroMapSurfaceView implements OnTouchListener
 		floor[0].picture = BitmapFactory.decodeResource(getResources(),
 				R.drawable.floor0);
 		floor[0].picture = Bitmap.createScaledBitmap(floor[0].picture, 150, 150, true);
+	}
+	
+	//called by animation thread to get happened events
+	public ArrayList<MetroMapEvent> getEvents(){
+		return this.alMMEvent;
 	}
 	
 }
