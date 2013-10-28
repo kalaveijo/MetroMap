@@ -1,9 +1,7 @@
-package metropolia.project.metromap;
+package metropolia.project.utility;
 
 import java.util.ArrayList;
 
-import metropolia.project.utility.MetroMapEvent;
-import metropolia.project.utility.MetroMapSurfaceView;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;

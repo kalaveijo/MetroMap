@@ -1,7 +1,13 @@
-package metropolia.project.metromap;
+package metropolia.project.customview;
 
 import java.util.ArrayList;
 
+import metropolia.project.metromap.MainActivity;
+import metropolia.project.metromap.R;
+import metropolia.project.metromap.SingleFloor;
+import metropolia.project.metromap.R.drawable;
+import metropolia.project.utility.AnimationThread;
+import metropolia.project.utility.Floor;
 import metropolia.project.utility.MetroMapEvent;
 import metropolia.project.utility.MetroMapSurfaceView;
 import android.content.Context;
@@ -31,6 +37,9 @@ public class FloorMapView extends MetroMapSurfaceView implements
 	private final boolean DEBUG = true; // enables debug data to this view
 	private final int Y_BOUNDARY_TOP = 0;
 	private final int Y_BOUNDARY_BOTTOM = 1200;
+	private final int MAP_X_POSITION = 200; // 100
+	private final int MAP_Y_BOTTOMMOST_POSITION = 600; // 450
+	private final int MAP_Y_SPACE_BETWEEN_FLOORS = 200; // 150
 
 	private Paint mPaint;
 	private Floor[] floor = new Floor[4];
@@ -187,7 +196,10 @@ public class FloorMapView extends MetroMapSurfaceView implements
 	public void addFloorMaps() {
 
 		for (int i = 0; i < 4; i++) {
-			floor[i] = new Floor(new Point(100, (450 - (150 * i))));
+			floor[i] = new Floor(
+					new Point(
+							MAP_X_POSITION,
+							(MAP_Y_BOTTOMMOST_POSITION - (MAP_Y_SPACE_BETWEEN_FLOORS * i))));
 		}
 
 		floor[3].picture = BitmapFactory.decodeResource(getResources(),

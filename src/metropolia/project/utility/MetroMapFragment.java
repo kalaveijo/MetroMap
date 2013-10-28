@@ -1,4 +1,4 @@
-package metropolia.project.metromap;
+package metropolia.project.utility;
 
 import android.app.Fragment;
 

@@ -1,5 +1,8 @@
-package metropolia.project.metromap;
+package metropolia.project.customview;
 
+import metropolia.project.metromap.R;
+import metropolia.project.metromap.R.raw;
+import metropolia.project.utility.AnimationThread;
 import metropolia.project.utility.MetroMapEvent;
 import metropolia.project.utility.MetroMapSurfaceView;
 import android.content.Context;

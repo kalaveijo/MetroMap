@@ -1,4 +1,4 @@
-package metropolia.project.metromap;
+package metropolia.project.utility;
 
 public interface FragmentParameterPasser {
 

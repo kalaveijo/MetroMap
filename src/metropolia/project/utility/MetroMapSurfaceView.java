@@ -2,7 +2,6 @@ package metropolia.project.utility;
 
 import java.util.ArrayList;
 
-import metropolia.project.metromap.Floor;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;

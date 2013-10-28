@@ -1,5 +1,8 @@
 package metropolia.project.metromap;
 
+import metropolia.project.metromap.R;
+import metropolia.project.metromap.R.layout;
+import metropolia.project.utility.MetroMapFragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
