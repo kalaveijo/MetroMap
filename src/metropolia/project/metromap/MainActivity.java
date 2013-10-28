@@ -1,10 +1,9 @@
 package metropolia.project.metromap;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 
@@ -14,16 +13,17 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		FragmentManager fragmentManager = getFragmentManager();
-		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		
+		FragmentTransaction fragmentTransaction = fragmentManager
+				.beginTransaction();
+
 		Splash fragment = new Splash();
 		fragmentTransaction.add(R.id.activity_vg, fragment);
 		fragmentTransaction.commit();
-		
+
 		changeFragment(new FloorMap());
-		
+
 	}
 
 	@Override
@@ -32,21 +32,23 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
-	//Changes fragment
-	public boolean changeFragment(MetroMapFragment f){
-		try{
-			
+
+	// Changes fragment
+	public boolean changeFragment(MetroMapFragment f) {
+		try {
+
 			FragmentManager fragmentManager = getFragmentManager();
-			FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+			FragmentTransaction fragmentTransaction = fragmentManager
+					.beginTransaction();
 			fragmentTransaction.replace(R.id.activity_vg, f);
 			fragmentTransaction.commit();
-			Object[] parameters = new Object[1]; // passing parameters and bypassing constructor
+			Object[] parameters = new Object[1]; // passing parameters and
+													// bypassing constructor
 			parameters[0] = this;
-			f.giveParameters(parameters); //declared in MetroMapFragment
+			f.giveParameters(parameters); // declared in MetroMapFragment
 
 			return true;
-		}catch(Exception e){
+		} catch (Exception e) {
 			Log.d("Changing Fragment", e.getMessage());
 			return false;
 		}// catch

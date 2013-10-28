@@ -33,16 +33,19 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 	private AnimationThread aThread;
 	private Context context;
 	private OnTouchListener touchListener;
+	private int currentFloor;
 
 	public SingleFloorView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
+		currentFloor = 1;
 		initBall(1);
 	}
 
 	public SingleFloorView(Context context, AttributeSet attrs, int floorNumber) {
 		super(context, attrs);
 		this.context = context;
+		currentFloor = floorNumber;
 		initBall(floorNumber);
 	}
 
@@ -78,6 +81,22 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 					 */
 					public boolean onFling(MotionEvent e1, MotionEvent e2,
 							float velocityX, float velocityY) {
+
+						// go down
+						if (velocityY > 0) {
+							if (currentFloor == 0) {
+								changeFloor(4);
+							} else {
+								changeFloor(currentFloor - 1);
+							}
+						} else if (velocityY < 0) { // go up
+							if (currentFloor == 4) {
+								changeFloor(1);
+							} else {
+								changeFloor(currentFloor + 1);
+							}
+						}
+
 						invalidate();
 						return true;
 					}
@@ -93,6 +112,8 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 		canvas.drawColor(Color.WHITE);
 		if (DEBUG) {
 			canvas.drawText(String.valueOf("ms: " + e.getTime()), 20, 20,
+					mPaint);
+			canvas.drawText(String.valueOf("Floor: " + currentFloor), 20, 40,
 					mPaint);
 		}
 		canvas.drawPicture(map);
@@ -161,7 +182,7 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 
 			case 0:
 				svg = SVGParser.getSVGFromResource(getResources(),
-						R.raw.zerofloor);
+						R.raw.android);
 				map = svg.getPicture();
 				return true;
 
@@ -173,13 +194,13 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 
 			case 2:
 				svg = SVGParser.getSVGFromResource(getResources(),
-						R.raw.secondfloor);
+						R.raw.android);
 				map = svg.getPicture();
 				return true;
 
 			case 3:
 				svg = SVGParser.getSVGFromResource(getResources(),
-						R.raw.thirdfloor);
+						R.raw.android);
 				map = svg.getPicture();
 				return true;
 			}
@@ -189,5 +210,10 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 			Log.d("picture load error:", e.getMessage());
 			return false;
 		}
+	}
+
+	public void changeFloor(int targetFloor) {
+		currentFloor = targetFloor;
+		loadPicture(targetFloor);
 	}
 }
