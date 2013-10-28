@@ -3,11 +3,10 @@ package metropolia.project.utility;
 import java.util.ArrayList;
 
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class AnimationThread extends Thread {
-	
+
 	private MetroMapSurfaceView cv;
 	private SurfaceHolder mHolder;
 	private boolean mRun = false;
@@ -20,7 +19,7 @@ public class AnimationThread extends Thread {
 		this.cv = cv;
 		mHolder = sHolder;
 	}
-	
+
 	public void setRunning(boolean run) {
 		mRun = run;
 	}
@@ -33,35 +32,37 @@ public class AnimationThread extends Thread {
 											// be used to draw into the
 											// surface's bitmap
 			if (mCanvas != null) {
-				
+
 				startTime = System.currentTimeMillis();
 
 				cv.tick();
 				alMMEvent = cv.getEvents();
-				
-				for(MetroMapEvent event : alMMEvent){ //retarted way of doing this but of well
+
+				// we need eventParserObject that handles event reading
+				for (MetroMapEvent event : alMMEvent) { // retarted way of doing
+														// this but of well
 					event.setTime(lastTime);
 				}
-				
-				if(alMMEvent.isEmpty()){ //nullcheck
+
+				if (alMMEvent.isEmpty()) { // nullcheck
 					alMMEvent.add(new MetroMapEvent(lastTime));
 				}
-				
+
 				cv.doDraw(mCanvas, alMMEvent.get(0));
-				
-				mHolder.unlockCanvasAndPost(mCanvas); 
+
+				mHolder.unlockCanvasAndPost(mCanvas);
 				lastTime = System.currentTimeMillis() - startTime;
 				sleepTime = perioid - lastTime;
-				
-				if(sleepTime <= 0){
+
+				if (sleepTime <= 0) {
 					sleepTime = 5;
 				}
-														// Finish editing pixels
-														// in the surface. After
-														// this call, the
-														// surface's current
-														// pixels will be shown
-														// on the screen
+				// Finish editing pixels
+				// in the surface. After
+				// this call, the
+				// surface's current
+				// pixels will be shown
+				// on the screen
 			}
 			try {
 				Thread.sleep(lastTime);
