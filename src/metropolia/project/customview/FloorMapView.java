@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import metropolia.project.metromap.MainActivity;
 import metropolia.project.metromap.R;
 import metropolia.project.metromap.SingleFloor;
-import metropolia.project.metromap.R.drawable;
 import metropolia.project.utility.AnimationThread;
+import metropolia.project.utility.EventHandler;
 import metropolia.project.utility.Floor;
 import metropolia.project.utility.MetroMapEvent;
 import metropolia.project.utility.MetroMapSurfaceView;
@@ -36,7 +36,7 @@ public class FloorMapView extends MetroMapSurfaceView implements
 										// enough to floor maps
 	private final boolean DEBUG = true; // enables debug data to this view
 	private final int Y_BOUNDARY_TOP = 0;
-	private final int Y_BOUNDARY_BOTTOM = 1200;
+	private final int Y_BOUNDARY_BOTTOM = 800;
 	private final int MAP_X_POSITION = 200; // 100
 	private final int MAP_Y_BOTTOMMOST_POSITION = 600; // 450
 	private final int MAP_Y_SPACE_BETWEEN_FLOORS = 200; // 150
@@ -77,7 +77,8 @@ public class FloorMapView extends MetroMapSurfaceView implements
 					// check if user wants to select correct floor
 					public boolean onSingleTapConfirmed(MotionEvent e) {
 						alMMEvent.clear();
-						MetroMapEvent mme = new MetroMapEvent((int) e.getX(),
+						MetroMapEvent mme = new MetroMapEvent(
+								EventHandler.TYPE_PASS_POINT, (int) e.getX(),
 								(int) e.getY());
 						alMMEvent.add(mme);
 						checkIfMapPress(mme);
@@ -109,16 +110,30 @@ public class FloorMapView extends MetroMapSurfaceView implements
 	/*
 	 * Does drawing to canvas, called from animation thread
 	 */
-	public void doDraw(Canvas canvas, MetroMapEvent e) {
+	public void doDraw(Canvas canvas, ArrayList<MetroMapEvent> e) {
 		canvas.drawColor(Color.WHITE);
 
+		EventHandler eh = new EventHandler(e);
+		MetroMapEvent eventTime = eh.resolveEvent(EventHandler.TYPE_PASS_TIME);
+		MetroMapEvent eventLocation = eh
+				.resolveEvent(EventHandler.TYPE_PASS_POINT);
+
 		if (DEBUG) {
-			canvas.drawText(String.valueOf("ms: " + e.getTime()), 20, 20,
-					mPaint);
-			canvas.drawText(String.valueOf("x: " + e.getLocation().x), 20, 40,
-					mPaint);
-			canvas.drawText(String.valueOf("y: " + e.getLocation().y), 20, 60,
-					mPaint);
+
+			if (eventTime != null) {
+				canvas.drawText(String.valueOf("ms: " + eventTime.getTime()),
+						20, 20, mPaint);
+			}
+
+			if (eventLocation != null) {
+				canvas.drawText(
+						String.valueOf("x: " + eventLocation.getLocation().x),
+						20, 40, mPaint);
+				canvas.drawText(
+						String.valueOf("y: " + eventLocation.getLocation().y),
+						20, 60, mPaint);
+			}
+
 		}
 
 		for (Floor f : floor) {
@@ -252,40 +267,58 @@ public class FloorMapView extends MetroMapSurfaceView implements
 		if (velocityY > 0) {
 			int velY = (int) velocityY / 10;
 			int tempY = velY;
+			int biggestY = floor[0].getLocation().y;
+			Floor f = floor[0];
 
-			for (Floor f : floor) {
-				if (f.getLocation().y + velY > Y_BOUNDARY_BOTTOM) {
-					tempY = -Y_BOUNDARY_BOTTOM + f.getLocation().y;
-					// Y_BOUNDARY_BOTTOM means screensize, should get this
-					// dynamically but ->
-					// LAZY. This checks if our fling would go totally overboard
+			// find out bottomost floor
+			for (Floor fl : floor) {
+				if (fl.getLocation().y > biggestY) {
+					f = fl;
 				}
 			}
+
+			// check if our fling would take it too far out
+			if (f.getLocation().y + velY > Y_BOUNDARY_BOTTOM) {
+				tempY = -Y_BOUNDARY_BOTTOM + f.getLocation().y;
+				// Y_BOUNDARY_BOTTOM means screensize, should get this
+				// dynamically but ->
+				// LAZY. This checks if our fling would go totally overboard
+			}
+
 			velY = tempY;
 
-			for (Floor f : floor) {
-				f.setTarget(new Point(f.getLocation().x,
-						(f.getLocation().y + velY)));
+			// set movement target for every floor
+			for (Floor flo : floor) {
+				flo.setTarget(new Point(flo.getLocation().x,
+						(flo.getLocation().y + velY)));
 			}// for
 
 			// when moving up
 		} else if (velocityY < 0) {
 			int velY = (int) velocityY / 10;
 			int tempY = velY;
+			int smallestY = floor[0].getLocation().y;
+			Floor f = floor[0];
 
-			for (Floor f : floor) {
-				if (f.getLocation().y - velY < Y_BOUNDARY_TOP) {
-					tempY = -Y_BOUNDARY_TOP - f.getLocation().y;
-					// 800 means screensize, should get this dynamically but ->
-					// LAZY. This checks if our fling would go totally overboard
+			// find out topmost floor
+			for (Floor fl : floor) {
+				if (fl.getLocation().y < smallestY) {
+					f = fl;
 				}
+			}
+
+			// check if our fling would take it too far out
+			if (f.getLocation().y - velY < Y_BOUNDARY_TOP) {
+				tempY = -Y_BOUNDARY_TOP - f.getLocation().y;
+				// 800 means screensize, should get this dynamically but ->
+				// LAZY. This checks if our fling would go totally overboard
 			}
 
 			velY = tempY;
 
-			for (Floor f : floor) {
-				f.setTarget(new Point(f.getLocation().x,
-						(f.getLocation().y + velY)));
+			for (Floor flo : floor) {
+				flo.setTarget(new Point(flo.getLocation().x,
+						(flo.getLocation().y + velY)));
 			}// for
 		}// if
 

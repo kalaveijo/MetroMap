@@ -37,18 +37,10 @@ public class AnimationThread extends Thread {
 
 				cv.tick();
 				alMMEvent = cv.getEvents();
+				alMMEvent.add(new MetroMapEvent(EventHandler.TYPE_PASS_TIME,
+						lastTime));
 
-				// we need eventParserObject that handles event reading
-				for (MetroMapEvent event : alMMEvent) { // retarted way of doing
-														// this but of well
-					event.setTime(lastTime);
-				}
-
-				if (alMMEvent.isEmpty()) { // nullcheck
-					alMMEvent.add(new MetroMapEvent(lastTime));
-				}
-
-				cv.doDraw(mCanvas, alMMEvent.get(0));
+				cv.doDraw(mCanvas, alMMEvent);
 
 				mHolder.unlockCanvasAndPost(mCanvas);
 				lastTime = System.currentTimeMillis() - startTime;

@@ -7,27 +7,38 @@ import android.graphics.Point;
  */
 public class MetroMapEvent {
 
-	private Point location = new Point(0,0);
+	private Point location = new Point(0, 0);
 	private long time = 0;
-	
-	public MetroMapEvent(int x, int y){
-		this.location = new Point(x,y);
+	private int type;
+
+	public MetroMapEvent(int type, int x, int y) {
+		this.location = new Point(x, y);
+		this.type = type;
 	}
-	
-	public MetroMapEvent(long time){
+
+	public MetroMapEvent(int type, long time) {
+		this.time = time;
+		this.type = type;
+	}
+
+	public MetroMapEvent(int type) {
+		this.type = type;
+	}
+
+	public void setTime(long time) {
 		this.time = time;
 	}
-	
-	public void setTime(long time){
-		this.time = time;
-	}
-	
-	public long getTime(){
+
+	public long getTime() {
 		return this.time;
 	}
-	
-	public Point getLocation(){
+
+	public int getType() {
+		return this.type;
+	}
+
+	public Point getLocation() {
 		return this.location;
 	}
-	
+
 }

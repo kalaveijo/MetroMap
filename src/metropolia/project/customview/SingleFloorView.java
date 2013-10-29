@@ -1,8 +1,10 @@
 package metropolia.project.customview;
 
+import java.util.ArrayList;
+
 import metropolia.project.metromap.R;
-import metropolia.project.metromap.R.raw;
 import metropolia.project.utility.AnimationThread;
+import metropolia.project.utility.EventHandler;
 import metropolia.project.utility.MetroMapEvent;
 import metropolia.project.utility.MetroMapSurfaceView;
 import android.content.Context;
@@ -111,11 +113,29 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 	/*
 	 * Does drawing to canvas, called from animation thread
 	 */
-	public void doDraw(Canvas canvas, MetroMapEvent e) {
+	public void doDraw(Canvas canvas, ArrayList<MetroMapEvent> e) {
 		canvas.drawColor(Color.WHITE);
+
+		EventHandler eh = new EventHandler(e);
+		MetroMapEvent eventTime = eh.resolveEvent(EventHandler.TYPE_PASS_TIME);
+		MetroMapEvent eventLocation = eh
+				.resolveEvent(EventHandler.TYPE_PASS_POINT);
+
 		if (DEBUG) {
-			canvas.drawText(String.valueOf("ms: " + e.getTime()), 20, 20,
-					mPaint);
+
+			if (eventTime != null) {
+				canvas.drawText(String.valueOf("ms: " + eventTime.getTime()),
+						20, 20, mPaint);
+			}
+
+			if (eventLocation != null) {
+				canvas.drawText(
+						String.valueOf("x: " + eventLocation.getLocation().x),
+						20, 40, mPaint);
+				canvas.drawText(
+						String.valueOf("y: " + eventLocation.getLocation().y),
+						20, 60, mPaint);
+			}
 			canvas.drawText(String.valueOf("Floor: " + currentFloor), 20, 40,
 					mPaint);
 		}
