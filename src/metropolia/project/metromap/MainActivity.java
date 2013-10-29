@@ -10,6 +10,8 @@ import android.view.Menu;
 
 public class MainActivity extends Activity {
 
+	private int targetFloor = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,4 +57,11 @@ public class MainActivity extends Activity {
 		}// catch
 	}// changeFragment
 
+	public void setTargetFloor(int i) {
+		this.targetFloor = i;
+	}
+
+	public int getTargetFloor() {
+		return this.targetFloor;
+	}
 }

@@ -2,6 +2,7 @@ package metropolia.project.customview;
 
 import java.util.ArrayList;
 
+import metropolia.project.metromap.MainActivity;
 import metropolia.project.metromap.R;
 import metropolia.project.utility.AnimationThread;
 import metropolia.project.utility.EventHandler;
@@ -43,15 +44,9 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 	public SingleFloorView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-		currentFloor = 1;
-		initBall(1);
-	}
-
-	public SingleFloorView(Context context, AttributeSet attrs, int floorNumber) {
-		super(context, attrs);
-		this.context = context;
-		currentFloor = floorNumber;
-		initBall(floorNumber);
+		MainActivity ma = (MainActivity) context;
+		currentFloor = ma.getTargetFloor();
+		initBall(ma.getTargetFloor());
 	}
 
 	// Initializes animation thread and canvas paints
@@ -239,4 +234,5 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 		currentFloor = targetFloor;
 		loadPicture(targetFloor);
 	}
+
 }

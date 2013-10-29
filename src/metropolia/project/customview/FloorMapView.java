@@ -32,11 +32,12 @@ import android.view.View.OnTouchListener;
 public class FloorMapView extends MetroMapSurfaceView implements
 		OnTouchListener, SurfaceHolder.Callback {
 
-	private final int TOLERANCE = 50; // used to check if user has touched close
+	private final int TOLERANCE = 100; // used to check if user has touched
+										// close
 										// enough to floor maps
 	private final boolean DEBUG = true; // enables debug data to this view
 	private final int Y_BOUNDARY_TOP = 0;
-	private final int Y_BOUNDARY_BOTTOM = 800;
+	private final int Y_BOUNDARY_BOTTOM = 600;
 	private final int MAP_X_POSITION = 200; // 100
 	private final int MAP_Y_BOTTOMMOST_POSITION = 600; // 450
 	private final int MAP_Y_SPACE_BETWEEN_FLOORS = 200; // 150
@@ -214,7 +215,8 @@ public class FloorMapView extends MetroMapSurfaceView implements
 			floor[i] = new Floor(
 					new Point(
 							MAP_X_POSITION,
-							(MAP_Y_BOTTOMMOST_POSITION - (MAP_Y_SPACE_BETWEEN_FLOORS * i))));
+							(MAP_Y_BOTTOMMOST_POSITION - (MAP_Y_SPACE_BETWEEN_FLOORS * i))),
+					i);
 		}
 
 		floor[3].picture = BitmapFactory.decodeResource(getResources(),
@@ -252,6 +254,7 @@ public class FloorMapView extends MetroMapSurfaceView implements
 			if (Math.abs(e.getLocation().x - f.getLocation().x) < TOLERANCE) {
 				if (Math.abs(e.getLocation().y - f.getLocation().y) < TOLERANCE) {
 					MainActivity ma = (MainActivity) context;
+					ma.setTargetFloor(f.getFloorNumber());
 					ma.changeFragment(new SingleFloor());
 				}
 			}

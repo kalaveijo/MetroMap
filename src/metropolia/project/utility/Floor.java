@@ -10,10 +10,12 @@ public class Floor {
 	public Bitmap picture;
 	private Point location;
 	private Point target;
+	private int floorNumber;
 
-	public Floor(Point loc) {
+	public Floor(Point loc, int floorNumber) {
 		this.location = loc;
 		this.target = loc;
+		this.floorNumber = floorNumber;
 	}
 
 	// called by tick() to move each floor object
@@ -63,4 +65,7 @@ public class Floor {
 		return this.picture;
 	}
 
+	public int getFloorNumber() {
+		return this.floorNumber;
+	}
 }
