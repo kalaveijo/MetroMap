@@ -199,26 +199,26 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 			switch (floornumber) {
 
 			case 0:
-				svg = SVGParser.getSVGFromResource(getResources(),
-						R.raw.android);
+				svg = SVGParser
+						.getSVGFromResource(getResources(), R.raw.floor0);
 				map = svg.getPicture();
 				return true;
 
 			case 1:
-				svg = SVGParser.getSVGFromResource(getResources(),
-						R.raw.android);
+				svg = SVGParser
+						.getSVGFromResource(getResources(), R.raw.floor0);
 				map = svg.getPicture();
 				return true;
 
 			case 2:
-				svg = SVGParser.getSVGFromResource(getResources(),
-						R.raw.android);
+				svg = SVGParser
+						.getSVGFromResource(getResources(), R.raw.floor0);
 				map = svg.getPicture();
 				return true;
 
 			case 3:
-				svg = SVGParser.getSVGFromResource(getResources(),
-						R.raw.android);
+				svg = SVGParser
+						.getSVGFromResource(getResources(), R.raw.floor0);
 				map = svg.getPicture();
 				return true;
 			}

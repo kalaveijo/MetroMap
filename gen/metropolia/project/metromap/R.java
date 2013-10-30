@@ -44,11 +44,10 @@ public final class R {
         public static final int main=0x7f080000;
     }
     public static final class raw {
-        public static final int android=0x7f040000;
-        public static final int firstfloor=0x7f040001;
-        public static final int secondfloor=0x7f040002;
-        public static final int thirdfloor=0x7f040003;
-        public static final int zerofloor=0x7f040004;
+        public static final int floor0=0x7f040000;
+        public static final int floor1=0x7f040001;
+        public static final int floor2=0x7f040002;
+        public static final int floor3=0x7f040003;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
