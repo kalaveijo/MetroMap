@@ -1,22 +1,37 @@
 package metropolia.project.metromap;
 
 import metropolia.project.utility.MetroMapFragment;
+import metropolia.project.utility.WifiScanner;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 
 public class MainActivity extends Activity {
 
 	private int targetFloor = 0;
+	private WifiScanner client;
+	private Thread t;
+	private MetroMapFragment mmf;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		// start wifiscanner
+		Context ct = getApplicationContext();
+		client = new WifiScanner(uiHandler, ct);
+		t = new Thread(client);
+		t.start();
+
+		// start fragments
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager
 				.beginTransaction();
@@ -26,7 +41,6 @@ public class MainActivity extends Activity {
 		fragmentTransaction.commit();
 
 		changeFragment(new FloorMap());
-
 	}
 
 	@Override
@@ -45,6 +59,7 @@ public class MainActivity extends Activity {
 					.beginTransaction();
 			fragmentTransaction.replace(R.id.activity_vg, f);
 			fragmentTransaction.commit();
+			mmf = f;
 			Object[] parameters = new Object[1]; // passing parameters and
 													// bypassing constructor
 			parameters[0] = this;
@@ -63,5 +78,21 @@ public class MainActivity extends Activity {
 
 	public int getTargetFloor() {
 		return this.targetFloor;
+	}
+
+	private Handler uiHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			if (msg.what == 0) {
+				// wifidata comes here
+			}
+		}
+	};
+
+	// handles 'back' button presses
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			changeFragment(new FloorMap());
+		}
+		return true;
 	}
 }
