@@ -6,13 +6,13 @@ import metropolia.project.metromap.MainActivity;
 import metropolia.project.metromap.R;
 import metropolia.project.utility.AnimationThread;
 import metropolia.project.utility.EventHandler;
+import metropolia.project.utility.Map;
 import metropolia.project.utility.MetroMapEvent;
 import metropolia.project.utility.MetroMapSurfaceView;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Picture;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -34,7 +34,7 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 	private final boolean DEBUG = true; // enables debug data to this view
 
 	private Paint mPaint;
-	private Picture map;
+	private Map map;
 	private GestureDetector mDetector;
 	private AnimationThread aThread;
 	private Context context;
@@ -134,7 +134,7 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 			canvas.drawText(String.valueOf("Floor: " + currentFloor), 20, 40,
 					mPaint);
 		}
-		canvas.drawPicture(map);
+		map.draw(canvas);
 	}
 
 	/*
@@ -201,25 +201,25 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 			case 0:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor0);
-				map = svg.getPicture();
+				map = new Map(svg.getPicture(), floornumber);
 				return true;
 
 			case 1:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor0);
-				map = svg.getPicture();
+				map = new Map(svg.getPicture(), floornumber);
 				return true;
 
 			case 2:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor0);
-				map = svg.getPicture();
+				map = new Map(svg.getPicture(), floornumber);
 				return true;
 
 			case 3:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor0);
-				map = svg.getPicture();
+				map = new Map(svg.getPicture(), floornumber);
 				return true;
 			}
 
