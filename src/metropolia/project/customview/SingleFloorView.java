@@ -85,12 +85,12 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 						// go down
 						if (velocityY > 0) {
 							if (currentFloor == 0) {
-								changeFloor(4);
+								changeFloor(3);
 							} else {
 								changeFloor(currentFloor - 1);
 							}
 						} else if (velocityY < 0) { // go up
-							if (currentFloor == 4) {
+							if (currentFloor == 3) {
 								changeFloor(1);
 							} else {
 								changeFloor(currentFloor + 1);
@@ -206,19 +206,19 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 
 			case 1:
 				svg = SVGParser
-						.getSVGFromResource(getResources(), R.raw.floor0);
+						.getSVGFromResource(getResources(), R.raw.floor1);
 				map = new Map(svg.getPicture(), floornumber);
 				return true;
 
 			case 2:
 				svg = SVGParser
-						.getSVGFromResource(getResources(), R.raw.floor0);
+						.getSVGFromResource(getResources(), R.raw.floor2);
 				map = new Map(svg.getPicture(), floornumber);
 				return true;
 
 			case 3:
 				svg = SVGParser
-						.getSVGFromResource(getResources(), R.raw.floor0);
+						.getSVGFromResource(getResources(), R.raw.floor3);
 				map = new Map(svg.getPicture(), floornumber);
 				return true;
 			}
