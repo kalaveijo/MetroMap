@@ -13,6 +13,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -82,21 +83,18 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 					public boolean onFling(MotionEvent e1, MotionEvent e2,
 							float velocityX, float velocityY) {
 
-						// go down
-						if (velocityY > 0) {
-							if (currentFloor == 0) {
-								changeFloor(3);
-							} else {
-								changeFloor(currentFloor - 1);
-							}
-						} else if (velocityY < 0) { // go up
-							if (currentFloor == 3) {
-								changeFloor(1);
-							} else {
-								changeFloor(currentFloor + 1);
-							}
-						}
-
+						/*
+						 * // go down if (velocityY > 0) {
+						 * 
+						 * if (currentFloor == 0) { changeFloor(3); } else {
+						 * changeFloor(currentFloor - 1); } } else if (velocityY
+						 * < 0) { // go up
+						 * 
+						 * 
+						 * if (currentFloor == 3) { changeFloor(1); } else {
+						 * changeFloor(currentFloor + 1); } }
+						 */
+						handleFling(velocityY);
 						invalidate();
 						return true;
 					}
@@ -141,7 +139,7 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 	 * called once in each animation cycle
 	 */
 	public void tick() {
-
+		map.move();
 	}
 
 	@Override
@@ -235,4 +233,18 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 		loadPicture(targetFloor);
 	}
 
+	public void handleFling(float velocityY) {
+		int velY = (int) velocityY / 10;
+		// when moving down
+		if (velocityY > 0) {
+
+			map.setTarget(new Point(map.getPosition().x, map.getPosition().y
+					+ velY));
+			// when going up
+		} else if (velocityY < 0) {
+			map.setTarget(new Point(map.getPosition().x, map.getPosition().y
+					+ velY));
+		}
+
+	}
 }

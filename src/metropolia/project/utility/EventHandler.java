@@ -33,22 +33,24 @@ public class EventHandler {
 
 		MetroMapEvent mmEvent = null;
 
-		for (MetroMapEvent event : alMME) {
-			switch (type) {
-			case TYPE_WAIT:
-				if (event.getType() == type)
-					mmEvent = event;
-				break;
+		if (alMME != null) {
+			for (MetroMapEvent event : alMME) {
+				switch (type) {
+				case TYPE_WAIT:
+					if (event.getType() == type)
+						mmEvent = event;
+					break;
 
-			case TYPE_PASS_TIME:
-				if (event.getType() == type)
-					mmEvent = event;
-				break;
+				case TYPE_PASS_TIME:
+					if (event.getType() == type)
+						mmEvent = event;
+					break;
 
-			case TYPE_PASS_POINT:
-				if (event.getType() == type)
-					mmEvent = event;
-				break;
+				case TYPE_PASS_POINT:
+					if (event.getType() == type)
+						mmEvent = event;
+					break;
+				}
 			}
 		}
 		return mmEvent;

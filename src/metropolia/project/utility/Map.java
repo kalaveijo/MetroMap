@@ -14,14 +14,21 @@ public class Map {
 
 	private Bitmap map;
 	private Point position;
+	private Point target;
 	private ArrayList<MetroMapDrawable> list;
 	private int floorNumber = 0;
+	public final int SPEED = 1;
 
 	public Map(Picture map, int floorNumber) {
 		this.map = pictureDrawable2Bitmap(map);
 		position = new Point(0, 0);
+		target = position;
 		list = new ArrayList<MetroMapDrawable>();
 		this.floorNumber = floorNumber;
+	}
+
+	public void setTarget(Point target) {
+		this.target = target;
 	}
 
 	public void draw(Canvas c) {
@@ -29,6 +36,33 @@ public class Map {
 		c.drawBitmap(map, position.x, position.y, paint);
 		for (MetroMapDrawable mmd : list) {
 			mmd.draw(c);
+		}
+	}
+
+	// called by tick method
+	public void move() {
+		// when we need to go up
+		if (position.y > target.y) {
+
+			if (position.y - target.y > 60) {
+				position.y = position.y - SPEED - 6;
+			} else if (position.y - target.y > 20) {
+				position.y = position.y - SPEED - 3;
+			} else {
+				position.y = position.y - SPEED;
+			}
+
+			// when we need to go down
+		} else if (position.y < target.y) {
+
+			if (target.y - position.y > 60) {
+				position.y = position.y + SPEED + 6;
+			} else if (target.y - position.y > 20) {
+				position.y = position.y + SPEED + 3;
+			} else {
+				position.y = position.y + SPEED;
+			}
+
 		}
 	}
 
@@ -50,4 +84,7 @@ public class Map {
 		return bitmap;
 	}
 
+	public Point getPosition() {
+		return this.position;
+	}
 }
