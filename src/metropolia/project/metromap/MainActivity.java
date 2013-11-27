@@ -18,6 +18,7 @@ import android.view.Menu;
 public class MainActivity extends Activity {
 
 	private int targetFloor = 0;
+	private int targetRoom = 0;
 	private WifiScanner client;
 	private Thread t;
 	private MetroMapFragment mmf;
@@ -123,6 +124,18 @@ public class MainActivity extends Activity {
 
 		srAL.add(new SingleRoom(R.drawable.nav_temp_button, "Ocean",
 				"Reserverd", 30));
+	}
+
+	public int getTargetRoom() {
+		return targetRoom;
+	}
+
+	public void setTargetRoom(int targetRoom) {
+		this.targetRoom = targetRoom;
+	}
+
+	public ArrayList<SingleRoom> getRoomList() {
+		return this.srAL;
 	}
 
 }
