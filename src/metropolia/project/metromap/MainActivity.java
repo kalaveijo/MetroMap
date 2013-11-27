@@ -1,11 +1,13 @@
 package metropolia.project.metromap;
 
+import java.util.ArrayList;
+
+import metropolia.project.DAL.SingleRoom;
 import metropolia.project.utility.MetroMapFragment;
 import metropolia.project.utility.WifiScanner;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,31 +22,38 @@ public class MainActivity extends Activity {
 	private Thread t;
 	private MetroMapFragment mmf;
 	private MetroMapFragment navBar;
+	private ArrayList<SingleRoom> srAL = new ArrayList<SingleRoom>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		populateRoomList();
+
 		// start wifiscanner
-		Context ct = getApplicationContext();
-		client = new WifiScanner(uiHandler, ct);
-		t = new Thread(client);
-		t.start();
+		// Context ct = getApplicationContext();
+		// client = new WifiScanner(uiHandler, ct);
+		// t = new Thread(client);
+		// t.start();
 
 		// start fragments
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager
 				.beginTransaction();
-
 		Splash fragment = new Splash();
 		Navigationbar nav = new Navigationbar();
+
+		// passing reference to navbarfragment
 		navBar = nav;
+		Object[] o = new Object[1];
+		o[0] = this;
+		nav.giveParameters(o);
+
 		fragmentTransaction.add(R.id.main, fragment);
 		fragmentTransaction.add(R.id.navbar, nav);
 
 		fragmentTransaction.commit();
-
 		changeFragment(new FloorMap());
 	}
 
@@ -99,6 +108,21 @@ public class MainActivity extends Activity {
 			changeFragment(new FloorMap());
 		}
 		return true;
+	}
+
+	/*
+	 * Should fetch rooms dynamically, not going to do that to this project
+	 */
+	public void populateRoomList() {
+
+		srAL.add(new SingleRoom(R.drawable.nav_temp_button, "Stringray",
+				"Reserverd", 30));
+
+		srAL.add(new SingleRoom(R.drawable.nav_temp_button, "Big Dry",
+				"Reserverd", 30));
+
+		srAL.add(new SingleRoom(R.drawable.nav_temp_button, "Ocean",
+				"Reserverd", 30));
 	}
 
 }

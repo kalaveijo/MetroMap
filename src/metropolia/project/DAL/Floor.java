@@ -1,4 +1,4 @@
-package metropolia.project.utility;
+package metropolia.project.DAL;
 
 import android.graphics.Bitmap;
 import android.graphics.Point;

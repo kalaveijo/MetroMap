@@ -2,12 +2,12 @@ package metropolia.project.customview;
 
 import java.util.ArrayList;
 
+import metropolia.project.DAL.Floor;
 import metropolia.project.metromap.MainActivity;
 import metropolia.project.metromap.R;
 import metropolia.project.metromap.SingleFloor;
 import metropolia.project.utility.AnimationThread;
 import metropolia.project.utility.EventHandler;
-import metropolia.project.utility.Floor;
 import metropolia.project.utility.MetroMapEvent;
 import metropolia.project.utility.MetroMapSurfaceView;
 import android.content.Context;

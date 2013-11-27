@@ -5,10 +5,11 @@ import android.app.Fragment;
 /*
  * utlity superclass for constructor bypassing
  */
-public class MetroMapFragment extends Fragment implements FragmentParameterPasser {
+public class MetroMapFragment extends Fragment implements
+		FragmentParameterPasser {
 
-	private Object[] parameters;
-	
+	protected Object[] parameters;
+
 	@Override
 	public boolean giveParameters(Object[] o) {
 		this.parameters = o;
