@@ -40,8 +40,8 @@ public class MainActivity extends Activity {
 		Splash fragment = new Splash();
 		Navigationbar nav = new Navigationbar();
 		navBar = nav;
-		fragmentTransaction.add(R.id.activity_vg, fragment);
-		// fragmentTransaction.add(R.id.activity_vg, nav);
+		fragmentTransaction.add(R.id.main, fragment);
+		fragmentTransaction.add(R.id.navbar, nav);
 
 		fragmentTransaction.commit();
 
@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
 			FragmentManager fragmentManager = getFragmentManager();
 			FragmentTransaction fragmentTransaction = fragmentManager
 					.beginTransaction();
-			fragmentTransaction.replace(R.id.activity_vg, f);
+			fragmentTransaction.replace(R.id.main, f);
 			fragmentTransaction.commit();
 			mmf = f;
 			Object[] parameters = new Object[1]; // passing parameters and

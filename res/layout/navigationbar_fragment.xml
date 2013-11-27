@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,19 +13,24 @@
 	android:id="@+id/button_floors"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_below="@id/cv"
     android:src="@drawable/nav_temp_button"/>
 	
 	<ImageButton
 	android:id="@+id/button_locate"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_below="@id/cv"
+    android:layout_toRightOf="@id/button_floors"
     android:src="@drawable/nav_temp_button"/>
 	
 	<ImageButton
 	android:id="@+id/button_rooms"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_below="@id/cv"
+    android:layout_toRightOf="@id/button_locate"
     android:src="@drawable/nav_temp_button"/>
     
     
-</LinearLayout>
+</RelativeLayout>

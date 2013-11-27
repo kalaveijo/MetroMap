@@ -30,13 +30,14 @@ public final class R {
         public static final int splash_image=0x7f020006;
     }
     public static final class id {
-        public static final int action_settings=0x7f090006;
-        public static final int activity_vg=0x7f090000;
-        public static final int button_floors=0x7f090002;
-        public static final int button_locate=0x7f090003;
-        public static final int button_rooms=0x7f090004;
-        public static final int cv=0x7f090001;
-        public static final int splash_image=0x7f090005;
+        public static final int action_settings=0x7f090007;
+        public static final int button_floors=0x7f090003;
+        public static final int button_locate=0x7f090004;
+        public static final int button_rooms=0x7f090005;
+        public static final int cv=0x7f090002;
+        public static final int main=0x7f090000;
+        public static final int navbar=0x7f090001;
+        public static final int splash_image=0x7f090006;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
