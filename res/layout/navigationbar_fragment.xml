@@ -9,18 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FloorMapFragment" />
-    
-    <metropolia.project.customview.FloorMapView
-        android:id="@+id/cv"
-        android:layout_width="wrap_content"
-        android:layout_height= "600dp"
-        />
-    
-    <ImageButton
+	<ImageButton
 	android:id="@+id/button_floors"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -37,5 +26,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:src="@drawable/nav_temp_button"/>
-
+    
+    
 </LinearLayout>

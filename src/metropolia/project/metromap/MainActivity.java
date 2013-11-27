@@ -19,6 +19,7 @@ public class MainActivity extends Activity {
 	private WifiScanner client;
 	private Thread t;
 	private MetroMapFragment mmf;
+	private MetroMapFragment navBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,11 @@ public class MainActivity extends Activity {
 				.beginTransaction();
 
 		Splash fragment = new Splash();
+		Navigationbar nav = new Navigationbar();
+		navBar = nav;
 		fragmentTransaction.add(R.id.activity_vg, fragment);
+		// fragmentTransaction.add(R.id.activity_vg, nav);
+
 		fragmentTransaction.commit();
 
 		changeFragment(new FloorMap());
@@ -95,4 +100,5 @@ public class MainActivity extends Activity {
 		}
 		return true;
 	}
+
 }
