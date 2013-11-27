@@ -116,11 +116,9 @@ public class MainActivity extends Activity {
 	 */
 	public void populateRoomList() {
 
-		srAL.add(new SingleRoom(R.drawable.nav_temp_button, "Stringray",
-				"Reserverd", 30));
+		srAL.add(new SingleRoom(R.drawable.rausku, "Stringray", "Reserverd", 30));
 
-		srAL.add(new SingleRoom(R.drawable.nav_temp_button, "Big Dry",
-				"Reserverd", 30));
+		srAL.add(new SingleRoom(R.drawable.rausku, "Big Dry", "Reserverd", 30));
 
 		srAL.add(new SingleRoom(R.drawable.nav_temp_button, "Ocean",
 				"Reserverd", 30));
