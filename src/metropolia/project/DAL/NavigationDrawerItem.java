@@ -26,7 +26,7 @@ public class NavigationDrawerItem {
 	private String text;
 	public static int buttonSizeX = 140;
 	public static int buttonSizeY = 60;
-	private int speed = 10;
+	public static int speed = 10;
 
 	public NavigationDrawerItem(SingleRoom singleRoom, Point location) {
 		this.room = singleRoom;

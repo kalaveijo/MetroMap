@@ -3,6 +3,7 @@ package metropolia.project.customview;
 import java.util.ArrayList;
 
 import metropolia.project.DAL.NavigationDrawer;
+import metropolia.project.DAL.NavigationDrawerItem;
 import metropolia.project.metromap.MainActivity;
 import metropolia.project.metromap.R;
 import metropolia.project.utility.AnimationThread;
@@ -44,6 +45,7 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 	private int currentFloor;
 	private boolean sliderOpen = false;
 	private NavigationDrawer naviDraw;
+	private int sliderTolerance = 30;
 
 	public SingleFloorView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -90,7 +92,7 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 							float velocityX, float velocityY) {
 
 						handleFling(velocityY);
-						handleDrawer(velocityX, velocityY);
+						handleDrawer(velocityX, velocityY, e1);
 						invalidate();
 						return true;
 					}
@@ -246,20 +248,28 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 
 	}
 
-	public void handleDrawer(float velocityX, float velocityY) {
+	public void handleDrawer(float velocityX, float velocityY, MotionEvent e1) {
 
 		// if fling is big enough on X direction
-		// ToDo need to add check if fling started near navidrawer
-		if (Math.abs(velocityX) > 200) {
-			// when taking navidrawer out
-			if (velocityX > 0) {
-				naviDraw.setTarget(true, 600);
-			}
-			// when putting navidrawer in
-			if (velocityX < 0) {
-				naviDraw.setTarget(true, -600);
-			}
+		Float x = e1.getX();
+		if (e1.getX() < NavigationDrawerItem.buttonSizeX + sliderTolerance) {
+			if (Math.abs(velocityX) > 200) {
+				// when taking navidrawer out
+				if (velocityX > 0) {
+					if (!sliderOpen) {
+						naviDraw.setTarget(true, 600);
+						sliderOpen = true;
+					}
+				}
+				// when putting navidrawer in
+				if (velocityX < 0) {
+					if (sliderOpen) {
+						naviDraw.setTarget(true, -600);
+						sliderOpen = false;
+					}
+				}
 
+			}
 		}
 
 		// if slider is open, register y direction swipes
