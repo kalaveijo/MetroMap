@@ -65,11 +65,13 @@ public class NavigationDrawer {
 
 	public void draw(Canvas canvas) {
 
+		// draw grey backgrounds for items
 		Paint paint = new Paint();
 		paint.setColor(Color.GRAY);
 		canvas.drawRect(new Rect(backgroundLocation.x, 0, backgroundLocation.x
 				+ NavigationDrawerItem.buttonSizeX, 900), paint);
 
+		// draw items
 		for (NavigationDrawerItem navi : navItems) {
 			navi.draw(canvas);
 		}
