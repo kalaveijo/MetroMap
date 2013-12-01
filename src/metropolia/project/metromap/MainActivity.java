@@ -1,9 +1,8 @@
 package metropolia.project.metromap;
 
-import java.util.ArrayList;
-
 import metropolia.project.DAL.SingleRoom;
 import metropolia.project.utility.MetroMapFragment;
+import metropolia.project.utility.RoomManager;
 import metropolia.project.utility.WifiScanner;
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -23,13 +22,14 @@ public class MainActivity extends Activity {
 	private Thread t;
 	private MetroMapFragment mmf;
 	private MetroMapFragment navBar;
-	private ArrayList<SingleRoom> srAL = new ArrayList<SingleRoom>();
+	private RoomManager roomManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		roomManager = new RoomManager();
 		populateRoomList();
 
 		// start wifiscanner
@@ -116,12 +116,13 @@ public class MainActivity extends Activity {
 	 */
 	public void populateRoomList() {
 
-		srAL.add(new SingleRoom(R.drawable.rausku, "Stringray", "Reserverd", 30));
-
-		srAL.add(new SingleRoom(R.drawable.rausku, "Big Dry", "Reserverd", 30));
-
-		srAL.add(new SingleRoom(R.drawable.nav_temp_button, "Ocean",
+		roomManager.addRoom(new SingleRoom(R.drawable.rausku, "Stringray",
 				"Reserverd", 30));
+		roomManager.addRoom(new SingleRoom(R.drawable.rausku, "Big Dry",
+				"Reserverd", 30));
+		roomManager.addRoom(new SingleRoom(R.drawable.nav_temp_button, "Ocean",
+				"Reserverd", 30));
+
 	}
 
 	public int getTargetRoom() {
@@ -132,8 +133,8 @@ public class MainActivity extends Activity {
 		this.targetRoom = targetRoom;
 	}
 
-	public ArrayList<SingleRoom> getRoomList() {
-		return this.srAL;
+	public RoomManager getRoomManager() {
+		return this.roomManager;
 	}
 
 }

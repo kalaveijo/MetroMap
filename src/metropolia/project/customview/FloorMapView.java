@@ -221,23 +221,23 @@ public class FloorMapView extends MetroMapSurfaceView implements
 
 		floor[3].picture = BitmapFactory.decodeResource(getResources(),
 				R.drawable.floor3);
-		floor[3].picture = Bitmap.createScaledBitmap(floor[3].picture, 150,
-				150, true);
+		floor[3].picture = Bitmap.createScaledBitmap(floor[3].picture, 456,
+				144, true);
 
 		floor[2].picture = BitmapFactory.decodeResource(getResources(),
 				R.drawable.floor2);
-		floor[2].picture = Bitmap.createScaledBitmap(floor[2].picture, 150,
-				150, true);
+		floor[2].picture = Bitmap.createScaledBitmap(floor[2].picture, 456,
+				144, true);
 
 		floor[1].picture = BitmapFactory.decodeResource(getResources(),
 				R.drawable.floor1);
-		floor[1].picture = Bitmap.createScaledBitmap(floor[1].picture, 150,
-				150, true);
+		floor[1].picture = Bitmap.createScaledBitmap(floor[1].picture, 456,
+				144, true);
 
 		floor[0].picture = BitmapFactory.decodeResource(getResources(),
 				R.drawable.floor0);
-		floor[0].picture = Bitmap.createScaledBitmap(floor[0].picture, 150,
-				150, true);
+		floor[0].picture = Bitmap.createScaledBitmap(floor[0].picture, 456,
+				144, true);
 	}
 
 	// called by animation thread to get happened events

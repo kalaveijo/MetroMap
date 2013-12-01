@@ -39,7 +39,7 @@ public class Room extends MetroMapFragment {
 				.findViewById(R.id.button_availability);
 
 		// fetch correct roomdata
-		SingleRoom sr = ma.getRoomList().get(ma.getTargetRoom());
+		SingleRoom sr = ma.getRoomManager().findRoomByIndex(ma.getTargetRoom());
 
 		roomName.setText(sr.getRoomName());
 		roomImage.setImageResource(sr.getPictureId());
