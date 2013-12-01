@@ -12,6 +12,14 @@ public class RoomManager {
 
 	private ArrayList<SingleRoom> roomList;
 
+	public ArrayList<SingleRoom> getRoomList() {
+		return roomList;
+	}
+
+	public void setRoomList(ArrayList<SingleRoom> roomList) {
+		this.roomList = roomList;
+	}
+
 	public RoomManager() {
 		this.roomList = new ArrayList<SingleRoom>();
 	}

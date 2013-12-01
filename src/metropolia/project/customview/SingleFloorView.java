@@ -2,6 +2,7 @@ package metropolia.project.customview;
 
 import java.util.ArrayList;
 
+import metropolia.project.DAL.NavigationDrawer;
 import metropolia.project.metromap.MainActivity;
 import metropolia.project.metromap.R;
 import metropolia.project.utility.AnimationThread;
@@ -41,17 +42,22 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 	private Context context;
 	private OnTouchListener touchListener;
 	private int currentFloor;
+	private boolean sliderOpen = false;
+	private NavigationDrawer naviDraw;
 
 	public SingleFloorView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
 		MainActivity ma = (MainActivity) context;
 		currentFloor = ma.getTargetFloor();
+
 		initBall(ma.getTargetFloor());
+		naviDraw = new NavigationDrawer(ma.getRoomManager());
 	}
 
 	// Initializes animation thread and canvas paints
 	private void initBall(int floorNumber) {
+
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG); // reduce the
 		mPaint.setColor(Color.BLACK); // jaggedness of lines in graphics
 		mPaint.setTextSize(13);
@@ -83,18 +89,8 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 					public boolean onFling(MotionEvent e1, MotionEvent e2,
 							float velocityX, float velocityY) {
 
-						/*
-						 * // go down if (velocityY > 0) {
-						 * 
-						 * if (currentFloor == 0) { changeFloor(3); } else {
-						 * changeFloor(currentFloor - 1); } } else if (velocityY
-						 * < 0) { // go up
-						 * 
-						 * 
-						 * if (currentFloor == 3) { changeFloor(1); } else {
-						 * changeFloor(currentFloor + 1); } }
-						 */
 						handleFling(velocityY);
+						handleDrawer(velocityX, velocityY);
 						invalidate();
 						return true;
 					}
@@ -133,12 +129,14 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 					mPaint);
 		}
 		map.draw(canvas);
+		naviDraw.draw(canvas);
 	}
 
 	/*
 	 * called once in each animation cycle
 	 */
 	public void tick() {
+		naviDraw.move();
 		map.move();
 	}
 
@@ -246,5 +244,27 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 					+ velY));
 		}
 
+	}
+
+	public void handleDrawer(float velocityX, float velocityY) {
+
+		// if fling is big enough on X direction
+		// ToDo need to add check if fling started near navidrawer
+		if (Math.abs(velocityX) > 200) {
+			// when taking navidrawer out
+			if (velocityX > 0) {
+				naviDraw.setTarget(true, 600);
+			}
+			// when putting navidrawer in
+			if (velocityX < 0) {
+				naviDraw.setTarget(true, -600);
+			}
+
+		}
+
+		// if slider is open, register y direction swipes
+		if (sliderOpen) {
+			// ToDo
+		}
 	}
 }
