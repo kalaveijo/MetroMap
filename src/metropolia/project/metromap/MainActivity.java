@@ -51,6 +51,9 @@ public class MainActivity extends Activity {
 		o[0] = this;
 		nav.giveParameters(o);
 
+		SearchBar search = new SearchBar();
+		
+		fragmentTransaction.add(R.id.search, search);
 		fragmentTransaction.add(R.id.main, fragment);
 		fragmentTransaction.add(R.id.navbar, nav);
 
@@ -116,7 +119,7 @@ public class MainActivity extends Activity {
 	 */
 	public void populateRoomList() {
 
-		roomManager.addRoom(new SingleRoom(R.drawable.rausku, "Stringray",
+		roomManager.addRoom(new SingleRoom(R.drawable.rausku, "Stingray",
 				"Reserverd", 30));
 		roomManager.addRoom(new SingleRoom(R.drawable.rausku, "Big Dry",
 				"Reserverd", 30));

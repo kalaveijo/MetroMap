@@ -40,7 +40,7 @@ public class RoomManager {
 	// returns null if no match
 	public SingleRoom findRoomByName(String name) {
 		for (SingleRoom sr : roomList) {
-			if (sr.getRoomName() == name) {
+			if (sr.getRoomName().equals(name) ) {
 				return sr;
 			}
 		}
