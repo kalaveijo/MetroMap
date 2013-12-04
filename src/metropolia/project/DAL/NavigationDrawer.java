@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.view.MotionEvent;
 
 /*
  * Androidin oma navgivation drawer on niin paska että teen oman surfaceviewiin
@@ -97,5 +98,20 @@ public class NavigationDrawer {
 						- NavigationDrawerItem.speed;
 			}
 		}
+	}
+	
+	
+	//returns null if no room is found
+	public SingleRoom checkWhichRoom(MotionEvent e){
+		
+		for(NavigationDrawerItem ndi : navItems){
+			
+			//checks subtraction and sees if absolute value is under certain value
+			if(Math.abs(e.getY()-(ndi.getLocation().y + NavigationDrawerItem.buttonSizeY/2 )) < NavigationDrawerItem.buttonSizeY/2){
+				return ndi.getRoom();
+			}
+		}
+		
+		return null;
 	}
 }

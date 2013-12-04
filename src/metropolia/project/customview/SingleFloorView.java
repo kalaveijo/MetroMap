@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import metropolia.project.DAL.NavigationDrawer;
 import metropolia.project.DAL.NavigationDrawerItem;
+import metropolia.project.DAL.SingleRoom;
 import metropolia.project.metromap.MainActivity;
 import metropolia.project.metromap.R;
+import metropolia.project.metromap.Room;
 import metropolia.project.utility.AnimationThread;
 import metropolia.project.utility.EventHandler;
 import metropolia.project.utility.Map;
@@ -91,9 +93,28 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 					public boolean onFling(MotionEvent e1, MotionEvent e2,
 							float velocityX, float velocityY) {
 
-						handleFling(velocityY);
-						handleDrawer(velocityX, velocityY, e1);
+						//megainputhack
+						if(e1.getX() < NavigationDrawerItem.buttonSizeX){
+							handleDrawer(velocityX, velocityY, e1);
+						} else {
+							handleFling(velocityY);
+						}
+						
 						invalidate();
+						return true;
+					}
+					
+					//used to check if user has pressed navigation drawer items
+					public boolean onSingleTapConfirmed(MotionEvent e) {
+						//check if press is close to drawers
+						if(e.getX() < NavigationDrawerItem.buttonSizeX){
+							SingleRoom sr = naviDraw.checkWhichRoom(e);
+							if(sr != null){
+								MainActivity ma = (MainActivity) context;
+								ma.setTargetRoom(sr);
+								ma.changeFragment(new Room());
+							}
+						}
 						return true;
 					}
 
@@ -274,7 +295,15 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 
 		// if slider is open, register y direction swipes
 		if (sliderOpen) {
-			// ToDo
+			if(velocityY > 200){
+				int newVelo = (int) velocityY / 10;
+				naviDraw.setTarget(false, newVelo);
+			}
+			
+			if(velocityY < -200){
+				int newVelo = (int) velocityY / 10;
+				naviDraw.setTarget(false, newVelo);
+			}
 		}
 	}
 }

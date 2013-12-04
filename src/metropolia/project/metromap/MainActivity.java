@@ -17,7 +17,7 @@ import android.view.Menu;
 public class MainActivity extends Activity {
 
 	private int targetFloor = 0;
-	private int targetRoom = 0;
+	private SingleRoom targetRoom;
 	private WifiScanner client;
 	private Thread t;
 	private MetroMapFragment mmf;
@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 
 		roomManager = new RoomManager();
 		populateRoomList();
-
+		targetRoom = roomManager.findRoomByIndex(0);
 		// start wifiscanner
 		// Context ct = getApplicationContext();
 		// client = new WifiScanner(uiHandler, ct);
@@ -125,11 +125,11 @@ public class MainActivity extends Activity {
 
 	}
 
-	public int getTargetRoom() {
+	public SingleRoom getTargetRoom() {
 		return targetRoom;
 	}
 
-	public void setTargetRoom(int targetRoom) {
+	public void setTargetRoom(SingleRoom targetRoom) {
 		this.targetRoom = targetRoom;
 	}
 
