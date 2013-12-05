@@ -2,6 +2,8 @@ package metropolia.project.utility;
 
 import java.util.ArrayList;
 
+import metropolia.project.DAL.SingleRoom;
+
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -15,26 +17,39 @@ public class Map {
 	private Bitmap map;
 	private Point position;
 	private Point target;
-	private ArrayList<MetroMapDrawable> list;
+	private ArrayList<SingleRoom> list;
 	private int floorNumber = 0;
-	public final int SPEED = 1;
+	public static final int SPEED = 1;
 
 	public Map(Picture map, int floorNumber) {
 		this.map = pictureDrawable2Bitmap(map);
 		position = new Point(0, 0);
 		target = position;
-		list = new ArrayList<MetroMapDrawable>();
+		list = new ArrayList<SingleRoom>();
+		this.floorNumber = floorNumber;
+	}
+	
+	public Map(Picture map, int floorNumber, RoomManager rm) {
+		this.map = pictureDrawable2Bitmap(map);
+		position = new Point(0, 0);
+		target = position;
+		list = rm.findRoomsForSingleFloor(floorNumber);
 		this.floorNumber = floorNumber;
 	}
 
-	public void setTarget(Point target) {
+	public void setTarget(Point target, int velY) {
+		
+		for(SingleRoom sr : list){
+			sr.setTargetLocation(new Point(sr.getLocation().x, sr.getLocation().y + velY ));
+		}
+		
 		this.target = target;
 	}
 
 	public void draw(Canvas c) {
 		Paint paint = new Paint();
 		c.drawBitmap(map, position.x, position.y, paint);
-		for (MetroMapDrawable mmd : list) {
+		for (SingleRoom mmd : list) {
 			mmd.draw(c);
 		}
 	}
@@ -64,13 +79,17 @@ public class Map {
 			}
 
 		}
+		
+		for(SingleRoom sr : list){
+			sr.move();
+		}
 	}
 
-	public void AddMetroMapDrawableToList(MetroMapDrawable o) {
+	public void AddMetroMapDrawableToList(SingleRoom o) {
 		this.list.add(o);
 	}
 
-	public void RemoveMetroMapDrawableFromList(MetroMapDrawable o) {
+	public void RemoveMetroMapDrawableFromList(SingleRoom o) {
 		this.list.remove(o);
 	}
 
