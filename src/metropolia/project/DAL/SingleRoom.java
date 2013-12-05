@@ -1,8 +1,10 @@
 package metropolia.project.DAL;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -14,6 +16,7 @@ public class SingleRoom {
 
 	private int pictureId;
 	private Point location;
+	private Point targetLocation;
 	private Paint paintColor;
 	private String roomName;
 	private String status;
@@ -21,6 +24,8 @@ public class SingleRoom {
 	private boolean availibility = false;;
 	private ArrayList<String> equipment;
 	public static int sizeX = 40, sizeY = 40;
+	private int SPEED = 1;
+	private int floor;
 
 	public SingleRoom(int pictureId, String roomName, String status,
 			int capacity) {
@@ -30,20 +35,24 @@ public class SingleRoom {
 		this.setStatus(status);
 		this.setCapacity(capacity);
 		this.location = new Point(0, 0);
+		this.targetLocation = this.location;
 		this.paintColor = new Paint();
 
 		setEquipment(new ArrayList<String>());
 	}
 	
 	public SingleRoom(int pictureId, String roomName, String status,
-			int capacity, Point location) {
+			int capacity, Point location, int  floor) {
 
 		this.setPictureId(pictureId);
 		this.setRoomName(roomName);
 		this.setStatus(status);
 		this.setCapacity(capacity);
 		this.location = location;
+		this.targetLocation = this.location;
 		this.paintColor = new Paint();
+		this.setFloor(floor);
+		this.equipment = new ArrayList<String>();
 
 		setEquipment(new ArrayList<String>());
 	}
@@ -57,12 +66,48 @@ public class SingleRoom {
 		this.setCapacity(capacity);
 		this.setEquipment(equipment);
 		this.location = new Point(0, 0);
+		this.targetLocation = this.location;
 		this.paintColor = new Paint();
 	}
 
 	public void draw(Canvas canvas) {
 		Paint paint = new Paint();
 		canvas.drawRect(new Rect(location.x, location.y, location.x+sizeX, location.y+sizeY), paint);
+		paint.setColor(Color.WHITE);
+		canvas.drawText(roomName, location.x, location.y, paint);
+	}
+
+	public void move(){
+		if (location.y > targetLocation.y) {
+
+			if (location.y - targetLocation.y > 60) {
+				location.y = location.y - SPEED - 6;
+			} else if (location.y - targetLocation.y > 20) {
+				location.y = location.y - SPEED - 3;
+			} else {
+				location.y = location.y - SPEED;
+			}
+
+			// when we need to go down
+		} else if (location.y < targetLocation.y) {
+
+			if (targetLocation.y - location.y > 60) {
+				location.y = location.y + SPEED + 6;
+			} else if (targetLocation.y - location.y > 20) {
+				location.y = location.y + SPEED + 3;
+			} else {
+				location.y = location.y + SPEED;
+			}
+
+		}
+	}
+	
+	public Point getTargetLocation() {
+		return targetLocation;
+	}
+
+	public void setTargetLocation(Point targetLocation) {
+		this.targetLocation = targetLocation;
 	}
 
 	public int getPictureId() {
@@ -127,6 +172,14 @@ public class SingleRoom {
 
 	public void setPaintColor(Paint paintColor) {
 		this.paintColor = paintColor;
+	}
+
+	public int getFloor() {
+		return floor;
+	}
+
+	public void setFloor(int floor) {
+		this.floor = floor;
 	}
 
 }

@@ -2,6 +2,7 @@ package metropolia.project.DAL;
 
 import java.util.ArrayList;
 
+import metropolia.project.metromap.MainActivity;
 import metropolia.project.utility.RoomManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -24,14 +25,16 @@ public class NavigationDrawer {
 			-NavigationDrawerItem.buttonSizeX, 0);
 	private Point backgroundTarget = backgroundLocation;
 
-	public NavigationDrawer(RoomManager roomManager) {
+	public NavigationDrawer(RoomManager roomManager, MainActivity ma) {
 		// toDo creation of navitemList
 		ArrayList<SingleRoom> roomList = roomManager.getRoomList();
 		navItems = new ArrayList<NavigationDrawerItem>();
 
 		for (SingleRoom sr : roomList) {
+			if(sr.getFloor() == ma.getTargetFloor()){
 			navItems.add(new NavigationDrawerItem(sr, new Point(posX, posY)));
 			posY = posY + NavigationDrawerItem.buttonSizeY + navListItemPadding;
+			}
 		}
 	}
 

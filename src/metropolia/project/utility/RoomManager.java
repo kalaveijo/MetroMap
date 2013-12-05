@@ -53,4 +53,15 @@ public class RoomManager {
 			sr.draw(canvas);
 		}
 	}
+	
+	//finds rooms for correct floor
+	public ArrayList<SingleRoom> findRoomsForSingleFloor(int floorNumber){
+		ArrayList<SingleRoom> roomList = new ArrayList<SingleRoom>();
+		for(SingleRoom sr : this.roomList){
+			if(sr.getFloor() == floorNumber){
+				roomList.add(sr);
+			}
+		}	
+		return roomList;
+	}
 }

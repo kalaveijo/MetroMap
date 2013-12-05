@@ -56,7 +56,7 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 		currentFloor = ma.getTargetFloor();
 
 		initBall(ma.getTargetFloor());
-		naviDraw = new NavigationDrawer(ma.getRoomManager());
+		naviDraw = new NavigationDrawer(ma.getRoomManager(), ma);
 	}
 
 	// Initializes animation thread and canvas paints
@@ -215,30 +215,31 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 	public boolean loadPicture(int floornumber) {
 		try {
 			SVG svg;
+			MainActivity ma = (MainActivity) context;
 			switch (floornumber) {
 
 			case 0:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor0);
-				map = new Map(svg.getPicture(), floornumber);
+				map = new Map(svg.getPicture(), floornumber, ma.getRoomManager());
 				return true;
 
 			case 1:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor1);
-				map = new Map(svg.getPicture(), floornumber);
+				map = new Map(svg.getPicture(), floornumber, ma.getRoomManager());
 				return true;
 
 			case 2:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor2);
-				map = new Map(svg.getPicture(), floornumber);
+				map = new Map(svg.getPicture(), floornumber, ma.getRoomManager());
 				return true;
 
 			case 3:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor3);
-				map = new Map(svg.getPicture(), floornumber);
+				map = new Map(svg.getPicture(), floornumber, ma.getRoomManager());
 				return true;
 			}
 
@@ -260,11 +261,11 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 		if (velocityY > 0) {
 
 			map.setTarget(new Point(map.getPosition().x, map.getPosition().y
-					+ velY));
+					+ velY), velY);
 			// when going up
 		} else if (velocityY < 0) {
 			map.setTarget(new Point(map.getPosition().x, map.getPosition().y
-					+ velY));
+					+ velY), velY);
 		}
 
 	}
@@ -306,4 +307,5 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 			}
 		}
 	}
+	
 }
