@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 
 /*
  * Holds data for single room
@@ -19,6 +20,7 @@ public class SingleRoom {
 	private int capacity;
 	private boolean availibility = false;;
 	private ArrayList<String> equipment;
+	public static int sizeX = 40, sizeY = 40;
 
 	public SingleRoom(int pictureId, String roomName, String status,
 			int capacity) {
@@ -28,6 +30,19 @@ public class SingleRoom {
 		this.setStatus(status);
 		this.setCapacity(capacity);
 		this.location = new Point(0, 0);
+		this.paintColor = new Paint();
+
+		setEquipment(new ArrayList<String>());
+	}
+	
+	public SingleRoom(int pictureId, String roomName, String status,
+			int capacity, Point location) {
+
+		this.setPictureId(pictureId);
+		this.setRoomName(roomName);
+		this.setStatus(status);
+		this.setCapacity(capacity);
+		this.location = location;
 		this.paintColor = new Paint();
 
 		setEquipment(new ArrayList<String>());
@@ -46,7 +61,8 @@ public class SingleRoom {
 	}
 
 	public void draw(Canvas canvas) {
-		// ToDo
+		Paint paint = new Paint();
+		canvas.drawRect(new Rect(location.x, location.y, location.x+sizeX, location.y+sizeY), paint);
 	}
 
 	public int getPictureId() {
