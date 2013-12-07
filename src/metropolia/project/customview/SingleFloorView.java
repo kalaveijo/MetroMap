@@ -93,23 +93,23 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 					public boolean onFling(MotionEvent e1, MotionEvent e2,
 							float velocityX, float velocityY) {
 
-						//megainputhack
-						if(e1.getX() < NavigationDrawerItem.buttonSizeX){
+						// megainputhack
+						if (e1.getX() < NavigationDrawerItem.buttonSizeX) {
 							handleDrawer(velocityX, velocityY, e1);
 						} else {
 							handleFling(velocityY);
 						}
-						
+
 						invalidate();
 						return true;
 					}
-					
-					//used to check if user has pressed navigation drawer items
+
+					// used to check if user has pressed navigation drawer items
 					public boolean onSingleTapConfirmed(MotionEvent e) {
-						//check if press is close to drawers
-						if(e.getX() < NavigationDrawerItem.buttonSizeX){
+						// check if press is close to drawers
+						if (e.getX() < NavigationDrawerItem.buttonSizeX) {
 							SingleRoom sr = naviDraw.checkWhichRoom(e);
-							if(sr != null){
+							if (sr != null) {
 								MainActivity ma = (MainActivity) context;
 								ma.setTargetRoom(sr);
 								ma.changeFragment(new Room());
@@ -221,25 +221,29 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 			case 0:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor0);
-				map = new Map(svg.getPicture(), floornumber, ma.getRoomManager());
+				map = new Map(svg.getPicture(), floornumber,
+						ma.getRoomManager());
 				return true;
 
 			case 1:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor1);
-				map = new Map(svg.getPicture(), floornumber, ma.getRoomManager());
+				map = new Map(svg.getPicture(), floornumber,
+						ma.getRoomManager());
 				return true;
 
 			case 2:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor2);
-				map = new Map(svg.getPicture(), floornumber, ma.getRoomManager());
+				map = new Map(svg.getPicture(), floornumber,
+						ma.getRoomManager());
 				return true;
 
 			case 3:
 				svg = SVGParser
 						.getSVGFromResource(getResources(), R.raw.floor3);
-				map = new Map(svg.getPicture(), floornumber, ma.getRoomManager());
+				map = new Map(svg.getPicture(), floornumber,
+						ma.getRoomManager());
 				return true;
 			}
 
@@ -296,16 +300,16 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 
 		// if slider is open, register y direction swipes
 		if (sliderOpen) {
-			if(velocityY > 200){
+			if (velocityY > 200) {
 				int newVelo = (int) velocityY / 10;
 				naviDraw.setTarget(false, newVelo);
 			}
-			
-			if(velocityY < -200){
+
+			if (velocityY < -200) {
 				int newVelo = (int) velocityY / 10;
 				naviDraw.setTarget(false, newVelo);
 			}
 		}
 	}
-	
+
 }

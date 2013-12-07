@@ -41,6 +41,8 @@ public class FloorMapView extends MetroMapSurfaceView implements
 	private final int MAP_X_POSITION = 200; // 100
 	private final int MAP_Y_BOTTOMMOST_POSITION = 600; // 450
 	private final int MAP_Y_SPACE_BETWEEN_FLOORS = 200; // 150
+	private final int BUTTON_X = 456;
+	private final int BUTTON_Y = 144;
 
 	private Paint mPaint;
 	private Floor[] floor = new Floor[4];
@@ -221,23 +223,23 @@ public class FloorMapView extends MetroMapSurfaceView implements
 
 		floor[3].picture = BitmapFactory.decodeResource(getResources(),
 				R.drawable.floor3);
-		floor[3].picture = Bitmap.createScaledBitmap(floor[3].picture, 456,
-				144, true);
+		floor[3].picture = Bitmap.createScaledBitmap(floor[3].picture,
+				BUTTON_X, BUTTON_Y, true);
 
 		floor[2].picture = BitmapFactory.decodeResource(getResources(),
 				R.drawable.floor2);
-		floor[2].picture = Bitmap.createScaledBitmap(floor[2].picture, 456,
-				144, true);
+		floor[2].picture = Bitmap.createScaledBitmap(floor[2].picture,
+				BUTTON_X, BUTTON_Y, true);
 
 		floor[1].picture = BitmapFactory.decodeResource(getResources(),
 				R.drawable.floor1);
-		floor[1].picture = Bitmap.createScaledBitmap(floor[1].picture, 456,
-				144, true);
+		floor[1].picture = Bitmap.createScaledBitmap(floor[1].picture,
+				BUTTON_X, BUTTON_Y, true);
 
 		floor[0].picture = BitmapFactory.decodeResource(getResources(),
 				R.drawable.floor0);
-		floor[0].picture = Bitmap.createScaledBitmap(floor[0].picture, 456,
-				144, true);
+		floor[0].picture = Bitmap.createScaledBitmap(floor[0].picture,
+				BUTTON_X, BUTTON_Y, true);
 	}
 
 	// called by animation thread to get happened events
@@ -251,8 +253,9 @@ public class FloorMapView extends MetroMapSurfaceView implements
 	public void checkIfMapPress(MetroMapEvent e) {
 		for (Floor f : floor) {
 
-			if (Math.abs(e.getLocation().x - f.getLocation().x) < TOLERANCE) {
-				if (Math.abs(e.getLocation().y - f.getLocation().y) < TOLERANCE) {
+			if (Math.abs(e.getLocation().x - f.getLocation().x - (BUTTON_X / 2)) < TOLERANCE) {
+				if (Math.abs(e.getLocation().y - f.getLocation().y
+						- (BUTTON_Y / 2)) < TOLERANCE) {
 					MainActivity ma = (MainActivity) context;
 					ma.setTargetFloor(f.getFloorNumber());
 					ma.changeFragment(new SingleFloor());
