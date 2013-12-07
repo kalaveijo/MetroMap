@@ -3,7 +3,6 @@ package metropolia.project.utility;
 import java.util.ArrayList;
 
 import metropolia.project.DAL.SingleRoom;
-
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -28,8 +27,9 @@ public class Map {
 		list = new ArrayList<SingleRoom>();
 		this.floorNumber = floorNumber;
 	}
-	
+
 	public Map(Picture map, int floorNumber, RoomManager rm) {
+		rm.populateRoomList();
 		this.map = pictureDrawable2Bitmap(map);
 		position = new Point(0, 0);
 		target = position;
@@ -38,11 +38,12 @@ public class Map {
 	}
 
 	public void setTarget(Point target, int velY) {
-		
-		for(SingleRoom sr : list){
-			sr.setTargetLocation(new Point(sr.getLocation().x, sr.getLocation().y + velY ));
+
+		for (SingleRoom sr : list) {
+			sr.setTargetLocation(new Point(sr.getLocation().x,
+					sr.getLocation().y + velY));
 		}
-		
+
 		this.target = target;
 	}
 
@@ -79,8 +80,8 @@ public class Map {
 			}
 
 		}
-		
-		for(SingleRoom sr : list){
+
+		for (SingleRoom sr : list) {
 			sr.move();
 		}
 	}
