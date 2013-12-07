@@ -1,13 +1,11 @@
 package metropolia.project.DAL;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
 
 /*
  * Holds data for single room
@@ -40,9 +38,9 @@ public class SingleRoom {
 
 		setEquipment(new ArrayList<String>());
 	}
-	
+
 	public SingleRoom(int pictureId, String roomName, String status,
-			int capacity, Point location, int  floor) {
+			int capacity, Point location, int floor) {
 
 		this.setPictureId(pictureId);
 		this.setRoomName(roomName);
@@ -72,12 +70,13 @@ public class SingleRoom {
 
 	public void draw(Canvas canvas) {
 		Paint paint = new Paint();
-		canvas.drawRect(new Rect(location.x, location.y, location.x+sizeX, location.y+sizeY), paint);
-		paint.setColor(Color.WHITE);
+		// canvas.drawRect(new Rect(location.x, location.y, location.x+sizeX,
+		// location.y+sizeY), paint);
+		paint.setColor(Color.BLACK);
 		canvas.drawText(roomName, location.x, location.y, paint);
 	}
 
-	public void move(){
+	public void move() {
 		if (location.y > targetLocation.y) {
 
 			if (location.y - targetLocation.y > 60) {
@@ -101,7 +100,7 @@ public class SingleRoom {
 
 		}
 	}
-	
+
 	public Point getTargetLocation() {
 		return targetLocation;
 	}
