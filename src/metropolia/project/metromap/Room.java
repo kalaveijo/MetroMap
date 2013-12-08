@@ -32,20 +32,14 @@ public class Room extends MetroMapFragment {
 		MainActivity ma = (MainActivity) getActivity();
 		TextView roomName = (TextView) ma.findViewById(R.id.roomtext);
 		ImageView roomImage = (ImageView) ma.findViewById(R.id.roomimage);
-		Button buttonEquipment = (Button) ma
-				.findViewById(R.id.button_equipment);
-		Button buttonCapacity = (Button) ma.findViewById(R.id.button_capacity);
-		Button buttonAvailibility = (Button) ma
-				.findViewById(R.id.button_availability);
+		Button showMap = (Button) ma.findViewById(R.id.button_show_map);
 
 		// fetch correct roomdata
 		SingleRoom sr = ma.getTargetRoom();
 
 		roomName.setText(sr.getRoomName());
-		roomImage.setImageResource(sr.getPictureId());
-		buttonEquipment.setText("Equipment");
-		buttonCapacity.setText(Integer.toString(sr.getCapacity()));
-		buttonAvailibility.setText(sr.getStatus());
+		roomImage.setImageResource(R.drawable.room_picture_real);
+
 	}
 
 }
