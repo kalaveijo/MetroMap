@@ -48,6 +48,7 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 	private boolean sliderOpen = false;
 	private NavigationDrawer naviDraw;
 	private int sliderTolerance = 30;
+	private int tolerance = 20;
 
 	public SingleFloorView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -108,13 +109,38 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 					public boolean onSingleTapConfirmed(MotionEvent e) {
 						// check if press is close to drawers
 						if (e.getX() < NavigationDrawerItem.buttonSizeX) {
+
+							// checks if user pressed highlight button
+							// if not, show room info
 							SingleRoom sr = naviDraw.checkWhichRoom(e);
-							if (sr != null) {
-								MainActivity ma = (MainActivity) context;
-								ma.setTargetRoom(sr);
-								ma.changeFragment(new Room());
+							if (e.getX() > NavigationDrawerItem.buttonSizeX / 1.5) {
+								if (sr != null) {
+									sr.highlightRoom();
+								}
+							} else {
+								if (sr != null) {
+									MainActivity ma = (MainActivity) context;
+									ma.setTargetRoom(sr);
+									ma.changeFragment(new Room());
+								}
 							}
+
 						}
+
+						/*
+						 * // check if user has selected room from map
+						 * MainActivity ma = (MainActivity) context; RoomManager
+						 * rm = ma.getRoomManager();
+						 * 
+						 * for (SingleRoom sr : rm
+						 * .findRoomsForSingleFloor(currentFloor)) { if
+						 * (Math.abs(e.getX() - sr.getLocation().x) <=
+						 * tolerance) { if (Math.abs(e.getY() -
+						 * sr.getLocation().y) <= tolerance) {
+						 * ma.setTargetRoom(sr); ma.changeFragment(new Room());
+						 * } } }
+						 */
+
 						return true;
 					}
 

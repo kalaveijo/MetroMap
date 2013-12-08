@@ -31,9 +31,10 @@ public class NavigationDrawer {
 		navItems = new ArrayList<NavigationDrawerItem>();
 
 		for (SingleRoom sr : roomList) {
-			if(sr.getFloor() == ma.getTargetFloor()){
-			navItems.add(new NavigationDrawerItem(sr, new Point(posX, posY)));
-			posY = posY + NavigationDrawerItem.buttonSizeY + navListItemPadding;
+			if (sr.getFloor() == ma.getTargetFloor()) {
+				navItems.add(new NavigationDrawerItem(sr, new Point(posX, posY)));
+				posY = posY + NavigationDrawerItem.buttonSizeY
+						+ navListItemPadding;
 			}
 		}
 	}
@@ -86,6 +87,7 @@ public class NavigationDrawer {
 		for (NavigationDrawerItem naviDrawItem : navItems) {
 			naviDrawItem.move();
 		}
+		checkIfBarIsOpen();
 	}
 
 	public void moveBackground() {
@@ -102,19 +104,29 @@ public class NavigationDrawer {
 			}
 		}
 	}
-	
-	
-	//returns null if no room is found
-	public SingleRoom checkWhichRoom(MotionEvent e){
-		
-		for(NavigationDrawerItem ndi : navItems){
-			
-			//checks subtraction and sees if absolute value is under certain value
-			if(Math.abs(e.getY()-(ndi.getLocation().y + NavigationDrawerItem.buttonSizeY/2 )) < NavigationDrawerItem.buttonSizeY/2){
+
+	// returns null if no room is found
+	public SingleRoom checkWhichRoom(MotionEvent e) {
+
+		for (NavigationDrawerItem ndi : navItems) {
+
+			// checks subtraction and sees if absolute value is under certain
+			// value
+			if (Math.abs(e.getY()
+					- (ndi.getLocation().y + NavigationDrawerItem.buttonSizeY / 2)) < NavigationDrawerItem.buttonSizeY / 2) {
 				return ndi.getRoom();
 			}
 		}
-		
+
 		return null;
+	}
+
+	// häck
+	private void checkIfBarIsOpen() {
+		if (backgroundLocation.x == 0) {
+			for (NavigationDrawerItem ndi : navItems) {
+				ndi.setLocation(new Point(0, ndi.getLocation().y));
+			}
+		}
 	}
 }

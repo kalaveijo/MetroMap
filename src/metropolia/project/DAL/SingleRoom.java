@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 
 /*
  * Holds data for single room
@@ -21,7 +22,7 @@ public class SingleRoom {
 	private int capacity;
 	private boolean availibility = false;;
 	private ArrayList<String> equipment;
-	public static int sizeX = 40, sizeY = 40;
+	public static int sizeX = 40, sizeY = 15;
 	private int SPEED = 1;
 	private int floor;
 
@@ -35,6 +36,7 @@ public class SingleRoom {
 		this.location = new Point(0, 0);
 		this.targetLocation = this.location;
 		this.paintColor = new Paint();
+		this.paintColor.setColor(Color.WHITE);
 
 		setEquipment(new ArrayList<String>());
 	}
@@ -49,6 +51,7 @@ public class SingleRoom {
 		this.location = location;
 		this.targetLocation = this.location;
 		this.paintColor = new Paint();
+		this.paintColor.setColor(Color.WHITE);
 		this.setFloor(floor);
 		this.equipment = new ArrayList<String>();
 
@@ -66,12 +69,13 @@ public class SingleRoom {
 		this.location = new Point(0, 0);
 		this.targetLocation = this.location;
 		this.paintColor = new Paint();
+		this.paintColor.setColor(Color.WHITE);
 	}
 
 	public void draw(Canvas canvas) {
 		Paint paint = new Paint();
-		// canvas.drawRect(new Rect(location.x, location.y, location.x+sizeX,
-		// location.y+sizeY), paint);
+		canvas.drawRect(new Rect(location.x, location.y - sizeY, location.x
+				+ sizeX, location.y), paintColor);
 		paint.setColor(Color.BLACK);
 		canvas.drawText(roomName, location.x, location.y, paint);
 	}
@@ -179,6 +183,16 @@ public class SingleRoom {
 
 	public void setFloor(int floor) {
 		this.floor = floor;
+	}
+
+	public void highlightRoom() {
+
+		if (paintColor.getColor() != Color.RED) {
+			this.paintColor.setColor(Color.RED);
+		} else {
+			this.paintColor.setColor(Color.WHITE);
+		}
+
 	}
 
 }

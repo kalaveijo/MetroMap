@@ -19,22 +19,21 @@ public class NavigationDrawerItem {
 	}
 
 	public void setTargetLocation(Point targetLocation) {
-		
-		//checks if we are moving right
-		if(targetLocation.x > location.x){
-			if(targetLocation.x > 0){
+
+		// checks if we are moving right
+		if (targetLocation.x > location.x) {
+			if (targetLocation.x > 0) {
 				targetLocation.x = 0;
 			}
 		}
-		
-		//checks if we are moving left
-		if(targetLocation.x < location.x){
-			if(targetLocation.x < -buttonSizeX){
+
+		// checks if we are moving left
+		if (targetLocation.x < location.x) {
+			if (targetLocation.x < -buttonSizeX) {
 				targetLocation.x = -buttonSizeX;
 			}
 		}
-		
-		
+
 		this.targetLocation = targetLocation;
 	}
 
@@ -58,6 +57,8 @@ public class NavigationDrawerItem {
 		paint.setColor(Color.WHITE);
 		canvas.drawText(text, location.x + (buttonSizeX) / 4, location.y
 				+ (buttonSizeY) / 2, paint);
+		canvas.drawCircle(location.x + (buttonSizeX) - 20, location.y
+				+ (buttonSizeY) / 2, 10, room.getPaintColor());
 	}
 
 	public Point getLocation() {
@@ -71,11 +72,9 @@ public class NavigationDrawerItem {
 	// used to move at targeted position
 	// practically this is used to bring out navDraw from left
 	public void move() {
-		
-		//check if buttons are out of boundaries and correct
-		
-		
-		
+
+		// check if buttons are out of boundaries and correct
+
 		// move in x direction
 		if (location.x != targetLocation.x) {
 			// when moving right
@@ -87,11 +86,11 @@ public class NavigationDrawerItem {
 				location.x = location.x - speed;
 			}
 		} else {
-			if(location.x < -buttonSizeX){
+			if (location.x < -buttonSizeX) {
 				location.x = -buttonSizeX;
 			}
-			
-			if(location.x > 0){
+
+			if (location.x > 0) {
 				location.x = 0;
 			}
 		}

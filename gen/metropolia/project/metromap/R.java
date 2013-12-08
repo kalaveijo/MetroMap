@@ -36,33 +36,32 @@ public final class R {
         public static final int nav_temp_button=0x7f02000c;
         public static final int rausku=0x7f02000d;
         public static final int room_picture=0x7f02000e;
-        public static final int search=0x7f02000f;
-        public static final int search_bar=0x7f020010;
-        public static final int search_button=0x7f020011;
-        public static final int show_map_btn=0x7f020012;
-        public static final int slider_header=0x7f020013;
-        public static final int splash_image=0x7f020014;
-        public static final int splash_screen=0x7f020015;
-        public static final int top_bar_hdpi=0x7f020016;
+        public static final int room_picture_real=0x7f02000f;
+        public static final int search=0x7f020010;
+        public static final int search_bar=0x7f020011;
+        public static final int search_button=0x7f020012;
+        public static final int show_map_btn=0x7f020013;
+        public static final int slider_header=0x7f020014;
+        public static final int splash_image=0x7f020015;
+        public static final int splash_screen=0x7f020016;
+        public static final int top_bar_hdpi=0x7f020017;
     }
     public static final class id {
-        public static final int action_settings=0x7f090010;
-        public static final int button_availability=0x7f09000c;
-        public static final int button_capacity=0x7f09000b;
-        public static final int button_equipment=0x7f09000a;
+        public static final int action_settings=0x7f09000e;
         public static final int button_floors=0x7f090004;
         public static final int button_locate=0x7f090005;
         public static final int button_rooms=0x7f090006;
-        public static final int button_search=0x7f09000e;
+        public static final int button_search=0x7f09000c;
+        public static final int button_show_map=0x7f09000a;
         public static final int cv=0x7f090003;
-        public static final int edittext_search=0x7f09000d;
+        public static final int edittext_search=0x7f09000b;
         public static final int infoimage=0x7f090009;
         public static final int main=0x7f090001;
         public static final int navbar=0x7f090002;
         public static final int roomimage=0x7f090008;
         public static final int roomtext=0x7f090007;
         public static final int search=0x7f090000;
-        public static final int splash_image=0x7f09000f;
+        public static final int splash_image=0x7f09000d;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
