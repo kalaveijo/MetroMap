@@ -40,6 +40,17 @@ public class Room extends MetroMapFragment {
 		roomName.setText(sr.getRoomName());
 		roomImage.setImageResource(R.drawable.room_picture_real);
 
-	}
+		showMap.setText("Show on Map");
 
+		showMap.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				MainActivity ma = (MainActivity) getActivity();
+				SingleRoom sr = ma.getTargetRoom();
+				ma.setRoomShouldBeHighlighted(sr);
+				ma.setTargetFloor(sr.getFloor());
+				ma.changeFragment(new SingleFloor());
+			}
+		});
+
+	}
 }

@@ -35,7 +35,7 @@ public class FloorMapView extends MetroMapSurfaceView implements
 	private final int TOLERANCE = 100; // used to check if user has touched
 										// close
 										// enough to floor maps
-	private final boolean DEBUG = true; // enables debug data to this view
+	private final boolean DEBUG = false; // enables debug data to this view
 	private final int Y_BOUNDARY_TOP = 0;
 	private final int Y_BOUNDARY_BOTTOM = 1000;
 	private final int MAP_X_POSITION = 200; // 100

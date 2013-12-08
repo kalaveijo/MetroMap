@@ -36,7 +36,7 @@ import com.larvalabs.svgandroid.SVGParser;
  */
 public class SingleFloorView extends MetroMapSurfaceView implements
 		OnTouchListener, SurfaceHolder.Callback {
-	private final boolean DEBUG = true; // enables debug data to this view
+	private final boolean DEBUG = false; // enables debug data to this view
 
 	private Paint mPaint;
 	private Map map;
@@ -55,9 +55,19 @@ public class SingleFloorView extends MetroMapSurfaceView implements
 		this.context = context;
 		MainActivity ma = (MainActivity) context;
 		currentFloor = ma.getTargetFloor();
-
 		initBall(ma.getTargetFloor());
 		naviDraw = new NavigationDrawer(ma.getRoomManager(), ma);
+
+		if (ma.getRoomShouldBeHighlighted() != null) {
+			for (NavigationDrawerItem ndi : naviDraw.getNavItems()) {
+				if (ndi.getRoom().getRoomName()
+						.equals(ma.getRoomShouldBeHighlighted().getRoomName())) {
+					ndi.getRoom().highlightRoom();
+				}
+			}
+
+			ma.setRoomShouldBeHighlighted(null);
+		}
 	}
 
 	// Initializes animation thread and canvas paints

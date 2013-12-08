@@ -23,6 +23,7 @@ public class MainActivity extends Activity {
 	private MetroMapFragment mmf;
 	private MetroMapFragment navBar;
 	private RoomManager roomManager;
+	private SingleRoom roomShouldBeHighlighted = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +125,14 @@ public class MainActivity extends Activity {
 
 	public RoomManager getRoomManager() {
 		return this.roomManager;
+	}
+
+	public SingleRoom getRoomShouldBeHighlighted() {
+		return roomShouldBeHighlighted;
+	}
+
+	public void setRoomShouldBeHighlighted(SingleRoom roomShouldBeHighlighted) {
+		this.roomShouldBeHighlighted = roomShouldBeHighlighted;
 	}
 
 }

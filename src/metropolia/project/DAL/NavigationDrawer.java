@@ -129,4 +129,9 @@ public class NavigationDrawer {
 			}
 		}
 	}
+
+	public ArrayList<NavigationDrawerItem> getNavItems() {
+		return navItems;
+	}
+
 }
